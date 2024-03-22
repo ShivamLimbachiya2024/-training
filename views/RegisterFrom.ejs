@@ -33,7 +33,9 @@
             text-align: center;
         }
 
-       
+       span{
+        color: red;
+       }
 
         #formField {
             border: none;
@@ -59,21 +61,27 @@
                     <div class="col">
                         <label for="fname">First Name:</label>
                         <input type="text" name="fname" id="fname">
+                        <span></span>
                         <label for="lname">Last Name:</label>
                         <input type="text" name="lname" id="lname">
+                        <span></span>
                         <label for="dob">Date of Birth:</label>
                         <input type="text" name="dob" id="dob">
+                        <span></span>
                         Gender:
                         <div class="gender">
                             <label><input type="radio" name="gender" id="M" value="M">Male</label>
                             <label><input type="radio" name="gender" id="F" value="F">Female</label>
                         </div>
+                        <span id="gendermsg"></span>
                     </div>
                     <div class="col">
                         <label for="email">Email:</label>
                         <input type="text" name="email" id="email">
+                        <span></span>
                         <label for="phone">Phone:</label>
                         <input type="text" name="phone" id="phone">
+                        <span></span>
                         State:
                         <select name="state" id="stateselect">
                             <option value="">Select</option>
@@ -82,6 +90,7 @@
                             <option value="MP">MP</option>
                             <option value="UP">Tamil Nadu</option>
                         </select>
+                        <span></span>
                         <label for="cityselect">City</label>
                         <select name="city" id="cityselect">
                             <option value="">Select</option>
@@ -90,9 +99,10 @@
                             <option value="Bhopal">Bhopal</option>
                             <option value="Chennai">Chennai</option>
                         </select>
+                        <span></span>
                     </div>
                 </div>
-                <div class="registerBtn"><input type="submit" value="Register"></div>
+                <div class="re  gisterBtn"><input type="submit" value="Register"></div>
             </form>
         </fieldset>
     </div>
