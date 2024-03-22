@@ -1,4 +1,5 @@
 const { json } = require('express');
+const jwt = require('jsonwebtoken');
 const { checkUserExist, insertUser, insertPass, fetchCreatedtime, updateTimeStamp } = require('./DBOperations');
 const { fetchActCode, fetchUserPass,fetchSalt } = require('./checkQueries');
 const md5 = require('md5');
@@ -51,6 +52,8 @@ const genForgotPass = async (req, res) => {
 }
 const userLogin = async (req, res) => {
     var userJson = req.body;
+    const succesObj={status:200,token:""}
+    const failObj={status:400,token:""}
     const isUserExist = await checkUserExist(userJson);
     if (isUserExist == 1) {
         const userSalt = await fetchSalt(userJson.username)
@@ -58,12 +61,15 @@ const userLogin = async (req, res) => {
         var hash = md5(stringToHash)
         const pass=await fetchUserPass(userJson.username)
         if(pass==hash){
-            res.send("success")
+            let jwtSecretKey = process.env.JWT_SECRET_KEY;
+            const token = jwt.sign(userJson, jwtSecretKey);
+            succesObj['token']=token
+            res.send(succesObj)
         }else{
-            res.send("fail")
+            res.send(failObj)
         }
     }else{
-        res.send("fail")
+        res.send(failObj)
     }
 }
 module.exports = { renderRegister, genForgotPass, userLogin, renderlogin, updateLink, renderFrgtPass, registerUser, renderPasspage, enterPass }

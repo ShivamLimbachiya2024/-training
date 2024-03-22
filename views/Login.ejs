@@ -104,12 +104,8 @@
                 },
                 body: data
             })
-            const resMsg=await response.text()
-            if (resMsg=="fail"){
-                document.getElementById('msg').innerHTML='Username or Password is Invalid'
-            }else{
-                document.getElementById('msg').innerHTML='Success'
-            }
+            const jsonData = await response.json()
+            console.log(jsonData);
         })
         
     </script>
