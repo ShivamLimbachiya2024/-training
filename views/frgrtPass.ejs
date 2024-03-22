@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            body {
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .row {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            .container {
+                max-width: 1140px;
+                margin: auto;
+            }
+
+            .registerBtn {
+                text-align: center;
+            }
+
+            #login {
+                margin: 10px;
+                padding: 0 80px
+            }
+
+            .registerBtn {
+                text-align: center;
+            }
+
+            #formField {
+                border: none;
+                border-radius: 10px;
+                backdrop-filter: blur(208px);
+                background: hsla(0, 0%, 100%, 0.31);
+                box-shadow: 0 0 5px #00000023;
+
+            }
+
+            body {
+                background: cadetblue;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <fieldset id="formField">
+                <legend><b>FORGOT PASSWORD</b></legend>
+                <form id="frgtPassFrom">
+                    <div class="row">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username">
+                        <div class="registerBtn"><input type="submit" id="login" value="Get Link"></div>
+                </form>
+                <div id="msg"></div>
+            </fieldset>
+        </div>
+    </body>
+    <script>
+        var myFrom = document.getElementById('formField');
+        document.getElementById('frgtPassFrom').addEventListener('submit', async function (event) {
+            event.preventDefault()
+            const formdata = new FormData(this)
+            const data = new URLSearchParams(formdata).toString();
+            const response = await fetch("/genereteForgotPass", {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/x-www-form-urlencoded",
+                    "Accept": "application/x-www-form-urlencoded"
+                },
+                body: data
+            })
+            var resData = await response.json()
+            activationCode = resData.actCode;
+            email = resData.email;
+            if (resData.status == 200) {
+                var linkBtn = document.createElement('a');
+                linkBtn.innerHTML = `http://localhost:8080/passwordRender?actcode=${activationCode}&email=${email}`;
+                linkBtn.setAttribute('href', `/passwordRender?actcode=${activationCode}&email=${email}`)
+                document.getElementById('msg').appendChild(linkBtn)
+            }
+            if (resData.status == 400) {
+                var errTxtNode = document.createTextNode("User dosnt exist!")
+                document.getElementById('msg').appendChild(errTxtNode)
+            }
+            this.reset()
+
+        })
+    </script>
+
+    </html>
+</body>
+
+</html>

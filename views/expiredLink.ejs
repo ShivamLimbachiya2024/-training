@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="updateLink()">Click Here to generate new Link</button>
+    <div id="link"></div>
+    <script>
+        async function updateLink() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            var ReqOBJ = {}
+            ReqOBJ['email']=email
+                const response = await fetch('/UpdateLink', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(ReqOBJ)
+            })
+            if (response) {
+                var a=document.createElement('a');
+                a.innerHTML=`http://localhost:8080/passwordRender?email=${email}`
+                a.href=`http://localhost:8080/passwordRender?email=${email}`
+                document.getElementById('link').appendChild(a)
+            }
+        }
+    </script>
+</body>
+
+</html>

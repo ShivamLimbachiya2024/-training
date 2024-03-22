@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: auto;
+        }
+
+        .registerBtn {
+            text-align: center;
+        }
+        .registerBtn {
+            text-align: center;
+        }
+
+       
+
+        #formField {
+            border: none;
+            border-radius: 10px;
+            backdrop-filter: blur(208px);
+            background: hsla(0, 0%, 100%, 0.31);
+            box-shadow: 0 0 5px #00000023;
+            
+        }
+
+        body {
+            background: cadetblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <fieldset id="formField">
+            <legend><b>Registration From</b></legend>
+            <form id="passsFrom">
+                <div class="row">
+                    <div class="col">
+                        <label for="createpass">Create Password</label>
+                        <input type="password" name="createpass" id="createpass">
+                    </div>
+                    <div class="col">
+                        <label for="confpass">Confirm Password</label>
+                        <input type="password" name="confpass" id="confpass">
+                    </div>
+                </div>
+                <div class="registerBtn"><input type="submit" value="Submit"></div>
+            </form>
+        </fieldset>
+    </div>
+    <script>
+        document.getElementById('passsFrom').addEventListener('submit', async function (event) {
+            event.preventDefault()
+            var createPass = document.getElementById('createpass').value;
+            var confPass = document.getElementById('confpass').value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            var ReqOBJ = {}
+            if (createPass == confPass) {
+                ReqOBJ['password'] = createPass;
+                ReqOBJ['email'] = email;
+                const response = await fetch('/CreatePassword', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(ReqOBJ)
+                })
+                if (response) {
+                    window.location.assign('http://localhost:8080/loginRender');
+                }
+            } else {
+                var errTxtNode = document.createTextNode('Passwords dosent Match!')
+                document.getElementById('formField').appendChild(errTxtNode);
+            }
+        })
+
+    </script>
+</body>
+
+</html>

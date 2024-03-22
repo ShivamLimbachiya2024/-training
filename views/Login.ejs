@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            body {
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .row {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            .container {
+                max-width: 1140px;
+                margin: auto;
+            }
+
+            .registerBtn {
+                text-align: center;
+            }
+
+            #login {
+                margin: 10px;
+                padding: 0 80px
+            }
+
+            .registerBtn {
+                text-align: center;
+            }
+
+
+
+            #formField {
+                border: none;
+                border-radius: 10px;
+                backdrop-filter: blur(208px);
+                background: hsla(0, 0%, 100%, 0.31);
+                box-shadow: 0 0 5px #00000023;
+
+            }
+
+            body {
+                background: cadetblue;
+            }
+
+            #frgPass {
+                text-align: right;
+                cursor: pointer;
+                color: blue;
+                font-size: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <fieldset id="formField">
+                <legend><b>LOGIN PAGE</b></legend>
+                <form id="loginFrom">
+                    <div class="row">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username">
+                        <label for="pass">Password</label>
+                        <input type="password" id="pass" name="pass">
+                        <a href="/ResetPass">
+                            <p id="frgPass">Forgot Password</p>
+                        </a>
+                        <div class="registerBtn"><input type="submit" id="login" value="Login"></div>
+                </form>
+                <div id="msg"></div>
+            </fieldset>
+        </div>
+    </body>
+    <script>
+        
+        document.getElementById('loginFrom').addEventListener('submit', async function (event) {
+            event.preventDefault()
+            const formdata = new FormData(this)
+            const data = new URLSearchParams(formdata).toString();
+            const response = await fetch("/Login", {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/x-www-form-urlencoded",
+                    "Accept": "application/x-www-form-urlencoded"
+                },
+                body: data
+            })
+            const resMsg=await response.text()
+            if (resMsg=="fail"){
+                document.getElementById('msg').innerHTML='Username or Password is Invalid'
+            }else{
+                document.getElementById('msg').innerHTML='Success'
+            }
+        })
+        
+    </script>
+
+    </html>
+</body>
+
+</html>

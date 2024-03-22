@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: auto;
+        }
+
+        .registerBtn {
+            text-align: center;
+        }
+
+       
+
+        #formField {
+            border: none;
+            border-radius: 10px;
+            backdrop-filter: blur(208px);
+            background: hsla(0, 0%, 100%, 0.31);
+            box-shadow: 0 0 5px #00000023;
+            
+        }
+
+        body {
+            background: cadetblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <fieldset id="formField">
+            <legend><b>Registration From</b></legend>
+            <form id="registrationFrom">
+                <div class="row">
+                    <div class="col">
+                        <label for="fname">First Name:</label>
+                        <input type="text" name="fname" id="fname">
+                        <label for="lname">Last Name:</label>
+                        <input type="text" name="lname" id="lname">
+                        <label for="dob">Date of Birth:</label>
+                        <input type="text" name="dob" id="dob">
+                        Gender:
+                        <div class="gender">
+                            <label><input type="radio" name="gender" id="M" value="M">Male</label>
+                            <label><input type="radio" name="gender" id="F" value="F">Female</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="email">Email:</label>
+                        <input type="text" name="email" id="email">
+                        <label for="phone">Phone:</label>
+                        <input type="text" name="phone" id="phone">
+                        State:
+                        <select name="state" id="stateselect">
+                            <option value="">Select</option>
+                            <option value="Gujarat">Gujarat</option>
+                            <option value="Maharastra">Maharastra</option>
+                            <option value="MP">MP</option>
+                            <option value="UP">Tamil Nadu</option>
+                        </select>
+                        <label for="cityselect">City</label>
+                        <select name="city" id="cityselect">
+                            <option value="">Select</option>
+                            <option value="Ahmedabad">Ahmedabad</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Bhopal">Bhopal</option>
+                            <option value="Chennai">Chennai</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="registerBtn"><input type="submit" value="Register"></div>
+            </form>
+        </fieldset>
+    </div>
+    <script src="/public/script.js"></script>
+</body>
+
+</html>
