@@ -71,8 +71,9 @@ const userLogin = async (req, res) => {
         const pass = await fetchUserPass(userJson.username);
         if (pass == hash) {
             let jwtSecretKey = process.env.JWT_SECRET_KEY;
-            const token = jwt.sign(userJson, jwtSecretKey);
+            const token = jwt.sign(userJson, jwtSecretKey,{expiresIn: 86400 });
             succesObj["token"] = token;
+            res.cookie("token",token)
             res.send(succesObj);
         } else {
             res.send(failObj);
@@ -81,6 +82,17 @@ const userLogin = async (req, res) => {
         res.send(failObj);
     }
 };
+const renderHomePage=(req,res)=>{
+    res.render('ReqWithToken');
+}
+const authServices=(req,res,next)=>{
+    var token = req.cookies.token
+    var jwtSecretKey=process.env.JWT_SECRET_KEY;
+    const decode = jwt.verify(token,jwtSecretKey);
+    if (decode.username=='shivam@gmail.com') {
+        next()
+    }
+}
 module.exports = {
     renderRegister,
     genForgotPass,
@@ -91,4 +103,6 @@ module.exports = {
     registerUser,
     renderPasspage,
     enterPass,
+    renderHomePage,
+    authServices
 };

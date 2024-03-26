@@ -72,7 +72,7 @@ const updateTimeStamp=(email)=>{
 const checkUserExist=(userJson)=>{
     const email=userJson.username 
     return new Promise((resolve, reject) => {
-        var sql = `SELECT count(userid) as count FROM userData where email='${email}';`
+        var sql = `SELECT count(userid) as count FROM userData where email='${email}' and active_Status=1;`
         con.query(sql,(err,result)=>{
             if (err) {
                 throw err
