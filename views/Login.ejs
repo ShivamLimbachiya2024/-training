@@ -91,7 +91,7 @@
         </div>
     </body>
     <script>
-        
+
         document.getElementById('loginFrom').addEventListener('submit', async function (event) {
             event.preventDefault()
             const formdata = new FormData(this)
@@ -105,9 +105,18 @@
                 body: data
             })
             const jsonData = await response.json()
-            console.log(jsonData);
+            for (const property in object) {
+                console.log(`${property}: ${object[property]}`);
+            }
+
+            function setCookie(cname, cvalue, exdays) {
+                const d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
         })
-        
+
     </script>
 
     </html>
