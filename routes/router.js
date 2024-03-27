@@ -12,4 +12,5 @@ router.post('/UpdateLink',updateLink)
 router.post('/CreatePassword',enterPass)
 router.post('/genereteForgotPass',genForgotPass)
 router.post('/Login',userLogin)
+
 module.exports = router;

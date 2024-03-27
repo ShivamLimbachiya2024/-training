@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table tr td{
+            border: 2px solid black;
+            border-radius: 4px;
+            height: 200px;
+            width: 200px;
+            background-color: white;
+            font-size: 150px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .container{
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        h1{
+            text-align: center;
+        }
+        body{
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <H1>Shivam Limbachiya 5/2/2024 24DEV011</H1>
+    <h1>Tic Tac Toe</h1>
+    <div class="container">
+        <table>
+            <tr>
+                <td id="1"></td>
+                <td id="2"></td>
+                <td id="3"></td>
+            </tr>
+            <tr>
+                <td id="4"></td>
+                <td id="5"></td>
+                <td id="6"></td>
+            </tr>
+            <tr>
+                <td id="7"></td>
+                <td id="8"></td>
+                <td id="9"></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var winCombination=[
+            [1,2,3],
+            [4,5,6],
+            [7,8,9],
+            [1,4,7],
+            [2,5,8],
+            [3,6,9],
+            [1,5,9],
+            [3,5,7]
+        ];
+        var xWin=[];
+        var oWin=[];
+        var turn='x'
+        var counter=0;
+        var cells=document.getElementsByTagName("td");
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].addEventListener("click",fillCells);
+        }
+        function fillCells() {
+            var cellId=event.target.id;
+            var clickedCell=document.getElementById(cellId);
+            if (turn=='x') {
+                clickedCell.innerHTML='x';
+                turn='o';
+                clickedCell.removeEventListener("click",fillCells);
+                xWin.push(parseInt(cellId));
+                
+            }else{
+                clickedCell.innerHTML='o';
+                turn='x';
+                clickedCell.removeEventListener("click",fillCells);
+                oWin.push(parseInt(cellId));
+            }
+            counter++;
+            checkWin();
+        }
+        function checkWin() {
+            for (let i = 0; i < winCombination.length; i++) {
+                if(xWin.includes(winCombination[i][0]) && xWin.includes(winCombination[i][1]) && xWin.includes(winCombination[i][2])){
+                    alert("Player X win!");
+                    location.reload();
+                }
+                if (oWin.includes(winCombination[i][0]) && oWin.includes(winCombination[i][1]) && oWin.includes(winCombination[i][2])) {
+                    alert("Player O win!");
+                    location.reload();
+                    
+                }
+            }
+            if (counter==9) {
+                alert("Draw!");
+                location.reload();
+            }    
+            
+        }
+        
+
+    </script>
+</body>
+</html>

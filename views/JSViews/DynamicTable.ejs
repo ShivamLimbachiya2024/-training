@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0">
+    <title>Document</title>
+    <style>
+        table tr td {
+            width: 100px;
+            height: 100px;
+        }
+
+        tr:nth-child(odd) td:nth-child(odd),
+        tr:nth-child(even) td:nth-child(even) {
+            background-color: grey;
+        }
+
+        .main {
+            display: flex;
+        }
+
+        .btn {
+            width: 50px;
+            height: 50px;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Shivam Limbachiya 1/2/2024 24DEV011</h1>
+    <div class="main">
+        <table border="1" id="main">
+            <tr id="row">
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <input type="button" class="btn" onclick="addColumn()" value="+">
+        <input type="button" class="btn" onclick="deleteColumn()" value="-">
+    </div>
+    <div>
+        <input type="button" class="btn" onclick="addRow()" value="+">
+        <input type="button" class="btn" onclick="deleteRow()" value="-">
+    </div>
+    <script>
+        function addRow() {
+            var table = document.getElementById("main");
+            var rowLen = table.rows.length;
+            var colsLen = table.rows[0].cells.length;
+            var emptyRow = table.insertRow(rowLen);
+            for (let i = 0; i < colsLen; i++) {
+                emptyRow.insertCell(i);
+            }
+        }
+        function deleteRow() {
+            var table = document.getElementById("main");
+            var rowLen = table.rows.length;
+            if (rowLen > 2) {
+
+                table.deleteRow(rowLen - 1);
+            }
+
+        }
+
+        function addColumn() {
+            var table = document.getElementById("main");
+            var rowLen = table.rows.length;
+            var colsLen = table.rows[0].cells.length;
+            var row = table.rows;
+            for (let i = 0; i < rowLen; i++) {
+                row[i].insertCell(colsLen);
+            }
+        }
+        function deleteColumn() {
+            var table = document.getElementById("main");
+            var colsLen = table.rows[0].cells.length;
+            var rowLen = table.rows.length;
+            var row = table.rows;
+            if (colsLen > 2) {
+                for (let i = 0; i < rowLen; i++) {
+                    row[i].deleteCell(colsLen-1);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

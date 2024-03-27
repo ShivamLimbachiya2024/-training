@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .click_btn {cursor: pointer;}
+        td{
+            height: 120px;
+            width   : 120px;
+            text-align: center;
+            border: 2px solid black;
+            border-radius: 15px;
+        }
+        tr:nth-child(odd) td:nth-child(odd),
+        tr:nth-child(even) td:nth-child(even) {
+            background-color: grey;
+        }
+    </style>
+</head>
+<body onresize="f_onresize()" onunload="f_onunload()" onpageshow="f_onpageshow()">
+
+
+ON RESIZE
+    <table  >
+        <tr>
+            <td >
+                <input type="button" class="click_btn" value="onclick" onclick="f_onclick()">
+            </td>
+            <td>
+                <input type="button" class="click_btn" value="onmouseover" onmouseover="f_onmouseover()">
+            </td>
+            <td>
+                <input type="button" class="click_btn" value="onmouseout"  	onmouseout="f_onmouseout()">
+            </td>
+            <td>
+                <input type="button" class="click_btn" value="onmousedown" onmousedown="f_onmousedown()">
+            </td>
+            <td>
+                <input type="button" class="click_btn" value="onmouseup" onmouseup="f_onmouseup()">
+            </td>
+            <td>
+                <input type="button" class="click_btn" value="onmousemove" onmousemove="f_onmousemove()">
+            </td>            
+            <td>
+
+                <input type="button" class="click_btn" value="ondblclick" ondblclick="f_ondblclick()">
+            </td>
+            <td>
+                <input type="button" class="click_btn" value="onmouseenter" onmouseenter="f_onmouseenter()">
+            </td>
+            <td>
+                <input type="button" class="click_btn" value="onmousemove" onmousemove="f_onmousemove()">
+            </td>
+            
+        </tr>
+        <tr>
+            <td>
+                <input type="text" value="onblur" onblur="f_onblur()">
+            </td>
+            <td>
+                <input type="text" value="onfocus" onfocus="f_onfocus()">
+            </td>
+            <td>
+                <input type="text" value="onfocusin" onfocusin="f_onfocusin()">
+            </td>
+            <td>
+                <input type="text" value="onfocusout" onfocusout="f_onfocusout()">
+            </td>
+            <td>
+                <input type="button" class="click_btn" value="oncontextmenu" oncontextmenu="f_oncontextmenu()"> 
+            </td>
+            <td>
+                <select onchange="f_onchange()">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </td>
+            <td>
+                <input type="text" oninput="f_oninput()" value="oninput">
+            </td>
+            
+            <td>
+                <form action="">
+                    <input type="text" oninvalid="f_oninvalid()" required>
+                    <input type="submit" class="click_btn" onsubmit="f_onsubmit()" >
+                    <input type="reset" class="click_btn" onreset="f_onreset()" >
+                </form>
+            </td>
+        <tr>
+            <td>
+                <input type="text" onkeydown="f_onkeydown()" value="onkeydown">
+            </td>
+            <td>
+                <input type="text" onkeypress="f_onkeypress()" value="onkeypress">
+            </td>
+            <td>
+                <input type="text" onkeyup="f_onkeyup()" value="onkeyup">
+            </td>
+        </tr>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" oncopy="f_oncopy()" value="oncopy">
+            </td>
+            <td>
+                <input type="text" oncut="f_oncut()" value="oncut">
+            </td>
+            <td>
+                <input type="text" onpaste="f_onpaste()" value="onpaste">
+            </td>
+        </tr>
+        <TR>
+            <td>
+                <p draggable="true" ondrag="f_ondrag()"> Drag Me</p>
+            </td>
+            <td>
+                <p draggable="true" ondragend="f_ondragend()"> Drag Me</p>
+                
+            </td>
+            <td>
+                <p draggable="true" ondragstart="f_ondragstart()"> Drag Me</p>
+                
+            </td>
+            <td>
+                <p draggable="true" ondragenter="f_ondragenter()"> Drag Me</p>
+                
+            </td>
+            
+            <td>
+                <p draggable="true" ondragleave="f_ondragleave()"> Drag Me</p>
+                
+            </td>
+        </TR>
+        <tr>
+            <td>
+                <iframe onload="f_onload()" src="/HTML_fom/Form1.html" width="100px"></iframe>
+                onload
+            </td>
+            <td>
+                <img src="image.gif" onerror="f_onerror()"> 
+                onerror
+            </td>
+
+        </tr>
+        
+    </table>
+
+    <script>
+        function f_onclick() {
+            var x=document.get
+            alert("onclick Triggered!");
+        }
+        function f_onmouseover(){
+            alert("onmouseover Triggered!");
+        }
+        function f_onmouseout() {
+            alert("onmouseout Triggered!");
+        }
+        function f_onmousedown() {
+            alert("onmousedown Triggered!");
+        }
+        function f_onmouseup() {
+            alert("onmouseup Triggered!");
+        }
+        function f_onmousemove() {
+            alert("onmousemove Triggered!");
+        }
+        function f_onmousewheel() {
+            alert("onmousewheel Triggered!");
+        }
+        function f_oncontextmenu() {
+            alert("oncontextmenu Triggered!")
+        }
+        function f_ondblclick() {
+            alert("ondblclick triggered!");
+        }
+        function f_onmouseenter() {
+            alert("onmouseenter triggered!");
+        }
+        function f_onmousemove() {
+            alert("onmousemove triggered");
+        }
+
+
+
+        function f_onblur() {
+            alert("onblur Triggered!");
+        }
+        function f_onfocus(){
+            alert("onfocus triggered!");
+        }
+        function f_onfocusin() {
+            alert("onfocusin triggered");
+        }
+        function f_onfocusout() {
+            alert("onfocusout Triggered");
+        }
+        function f_onchange() {
+            alert("onchange Triggered!");
+        }
+
+        function f_oncopy() {
+            alert("oncopy triggered!");
+        }
+        function f_oncut() {
+            alert("oncut triggered!");
+        }
+        function f_onpaste() {
+            alert("onpaste triggered!");
+        }
+        function f_oninput() {
+            alert("oninput triggered!");
+        }
+        function f_oninvalid() {
+            alert("oninvalid triggered!");
+        }
+        function f_onsubmit() {
+            alert("onsubmit triggered!");
+        }
+        function f_onreset() {
+            alert("onreset triggered!");
+        }
+
+        
+        function f_onkeydown() {
+            alert("onkeydown triggered!");
+        }
+        function f_onkeypress() {
+            alert("onkeypress triggered!");
+        }
+        function f_onkeyup() {
+            alert("onkeyup triggered!");
+        }
+        
+
+
+
+        function f_ondrag() {
+            alert("ondrag triggered!");
+        }
+        function f_ondragend() {
+            alert("ondragend triggered");
+        }
+        function f_ondragstart() {
+            alert("ondragstart triggered");
+        }
+        function f_ondragenter() {
+            alert("ondragenter triggered");
+        }
+        function f_ondragleave() {
+            alert("ondragleave triggered");
+        }
+        function f_onscroll() {
+            alert("onscroll triggered");
+        }
+        
+        
+        
+        function f_onload() {
+            alert("onload triggered");
+        }
+        function f_onerror() {
+            alert("onerror triggered");
+        }
+        function f_onresize() {
+            alert("onresize triggered");
+        }
+        function f_onunload() {
+            alert("onunload triggered");
+        }
+        function f_onpageshow() {
+            alert("onpageshow triggered");
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #main tr td {
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+        h1{
+            color: white;
+        }
+        #main {
+            width: 500px;
+            height: 500px;
+        }
+
+        body {
+            background-color: #f06063;
+        }
+
+        .scoreInfo {
+            color: white;
+            font-size: 50px;
+        }
+
+        .btn {
+            height: 50px;
+            width: 150px;
+            font-size: 40px;
+        }
+
+        .timmer {
+            color: aliceblue;
+            font-size: 40px;
+        }
+
+        #timetext,
+        #Res {
+            color: white;
+            font-size: 50px;
+
+        }
+        
+    </style>
+</head>
+
+<body>
+    <h1>
+        Shivam Limbachiya 1/2/2024 24DEV011
+    </h1>
+    <span class="scoreInfo">
+        <span>Score:</span>
+        <span id="score"></span>
+    </span>
+    <button class="btn" onclick="StartTime()">Start</button>
+    <span id="timetext">Timmer :</span>
+    <span class="timmer"></span>
+    <div id="Res"></div>
+    <table id="main">
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <script>
+        var score = 0;
+        var color;
+        var second;
+        var intvl;
+        function minusscore() {
+            score--;
+            document.getElementById("score").innerHTML = score;
+        }
+
+
+        var timer = document.querySelector(".timmer");
+        function StartTime() {
+            second = 5;
+            gameStart();
+            intvl = setInterval(timmer, 1000);
+            timmer();
+        }
+
+        function timmer() {
+            second = second - 1;
+            timer.innerHTML = second;
+            if (second == 0) {
+                var table = document.getElementById("main");
+                table.style.display = 'none';
+                clearInterval(intvl);
+                var res = document.getElementById("Res");
+                var sccele = document.createElement("h1");
+                sccele.innerText = "Your Score" + ": " + score;
+                res.append(sccele);
+            }
+        }
+        function gameStart() {
+            addRandomcolor();
+
+
+        }
+        function addRandomcolor() {
+            color = '#';
+            var letters = '0123456789ABCDEF';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+
+            var cellsForColor = document.getElementsByTagName("td");
+            for (let i = 0; i < cellsForColor.length; i++) {
+                cellsForColor[i].style.backgroundColor = color;
+
+            }
+
+
+            var randCell = cellsForColor[Math.floor(Math.random() * cellsForColor.length)];
+            randCell.style.opacity = "0.7"
+            randCell.addEventListener("click", add);
+
+        }
+        function removePreviousEvents() {
+            var cellsForColor = document.getElementsByTagName("td");
+            for (let i = 0; i < cellsForColor.length; i++) {
+                cellsForColor[i].removeEventListener("click", add);
+                cellsForColor[i].style.opacity = '1';
+            }
+        }
+
+        function add() {
+            // ScoreUpdate
+            score++;
+            scoretag = document.getElementById("score");
+            scoretag.innerHTML = score;
+
+            var table = document.getElementById("main");
+            var rowlen = table.rows.length;
+            var colslen = table.rows[0].cells.length;
+
+            // RowADD
+            var emptyrow = table.insertRow(rowlen);
+            var cell;
+            for (let i = 0; i < colslen; i++) {
+                cell = emptyrow.insertCell(i);
+
+            }
+
+            // columnAdd
+            var rowLencell = table.rows.length;
+            var row = table.rows;
+            for (let i = 0; i < rowLencell; i++) {
+                cell = row[i].insertCell(colslen);
+
+            }
+
+
+            removePreviousEvents();
+            addRandomcolor();
+
+            
+            const tds = document.querySelectorAll("td");
+            for (let i = 0; i < tds.length; i++) {
+                tds[i].removeEventListener("click", minusscore);
+                tds[i].addEventListener("click", minusscore);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

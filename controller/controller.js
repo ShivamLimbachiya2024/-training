@@ -7,7 +7,7 @@ const {
     fetchCreatedtime,
     updateTimeStamp,
 } = require("./DBOperations");
-const { fetchActCode, fetchUserPass, fetchSalt } = require("./checkQueries");
+const { fetchActCode,checkUserStatus, fetchUserPass, fetchSalt } = require("./checkQueries");
 const md5 = require("md5");
 const renderRegister = (req, res) => {
     res.render("RegisterFrom");
@@ -85,12 +85,19 @@ const userLogin = async (req, res) => {
 const renderHomePage=(req,res)=>{
     res.render('ReqWithToken');
 }
-const authServices=(req,res,next)=>{
+const authServices=async(req,res,next)=>{
     var token = req.cookies.token
-    var jwtSecretKey=process.env.JWT_SECRET_KEY;
-    const decode = jwt.verify(token,jwtSecretKey);
-    if (decode.username=='shivam@gmail.com') {
-        next()
+    if (typeof token==='undefined') {
+        res.render('Login')
+    }else{
+        var jwtSecretKey=process.env.JWT_SECRET_KEY;
+        const decode = jwt.verify(token,jwtSecretKey);
+        var userStatus=await checkUserStatus(decode.username)
+        if (userStatus=="active") {
+            next()
+        }else{
+            res.render('Login')
+        }
     }
 }
 module.exports = {
