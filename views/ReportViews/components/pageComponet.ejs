@@ -1,0 +1,7 @@
+<div>
+    <a href="/attenlist/?page=<%=1%>&month=<%=month%>"><button><<</button></a>
+    <a href="/attenlist/?page=<%=Number(pageNum)-1%>&month=<%=month%>"<%if(pageNum==1){%> onclick='return false;' <%}%> ><button><</button></a>
+    <a href=""><button><%=pageNum%></button></a>
+    <a href="/attenlist/?page=<%=Number(pageNum)+1%>&month=<%=month%>"<%if(pageNum==lastPage){%> onclick='return false;' <%}%>><button>></button></a>
+    <a href="/attenlist/?page=<%=lastPage%>&month=<%=month%>"><button>>></button></a>
+</div>
