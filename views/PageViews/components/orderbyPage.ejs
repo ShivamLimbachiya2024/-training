@@ -1,0 +1,7 @@
+<div>
+    <a href="/orderBy/?page=<%=1%>&sortBy=<%=sortBy%>&order=<%=order%>"><button><<</button></a>
+    <a href="/orderBy/?page=<%=Number(pageNum)-1%>&sortBy=<%=sortBy%>&order=<%=order%>"<%if(pageNum==1){%> onclick='return false;' <%}%> ><button><</button></a>
+    <a href=""><button><%=pageNum%></button></a>
+    <a href="/orderBy/?page=<%=Number(pageNum)+1%>&sortBy=<%=sortBy%>&order=<%=order%>"<%if(pageNum==lastPage){%> onclick='return false;' <%}%>><button>></button></a>
+    <a href="/orderBy/?page=<%=lastPage%>&sortBy=<%=sortBy%>&order=<%=order%>"><button>>></button></a>
+</div>
