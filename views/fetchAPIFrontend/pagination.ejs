@@ -21,6 +21,14 @@
         table tr th {
             border: 1px solid black;
         }
+        table tr th {
+            color: white;
+            background-color: black;
+        }
+        
+        table tr td {
+            border: 1px solid black;
+        }
     </style>
 </head>
 
@@ -31,7 +39,7 @@
                 <button id="next" onclick="nextPage()">-></button>
                 <input id="query" placeholder="Search here your tittle" type="text"><button onclick="searchFunc()">GO</button>
     </div>
-    <table>
+    <table cellspacing="0">
         <thead>
             <tr>
                 <th>User Id</th>
@@ -58,18 +66,18 @@
         }
         const displayData = () => {
             totalPage = Math.ceil(jsonData.length / noOfRecords);
-            console.log("Total pages : "+totalPage);
+            console.log("Total pages : " + totalPage);
             var prevBtn = document.getElementById('prev')
             var nextBtn = document.getElementById('next')
 
             if (curPage == 1) {
                 prevBtn.disabled = true;
-            }else{
+            } else {
                 prevBtn.disabled = false;
             }
             if (curPage == totalPage) {
                 nextBtn.disabled = true;
-            }else{
+            } else {
                 nextBtn.disabled = false;
             }
             var start;
@@ -98,16 +106,16 @@
             });
 
         }
-        
+
         const searchFunc = () => {
-            curPage=1
-            document.getElementById('curPage').innerHTML=curPage;
+            curPage = 1
+            document.getElementById('curPage').innerHTML = curPage;
             tbody.innerHTML = '';
             var query = document.getElementById("query").value;
             jsonData = globalData.filter((obj) => {
                 return obj.title.includes(query)
             })
-            console.log("serch objectlen: "+jsonData.length);
+            console.log("serch objectlen: " + jsonData.length);
             displayData()
         }
         const prevPage = () => {

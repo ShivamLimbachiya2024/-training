@@ -1,85 +1,66 @@
-const con = require('../modules/connection')
-exports.runQuery = (req, res) => {
-  let count = req.query.id ? req.query.id : 1;
+const con = require("../modules/connection");
+const studentlist = (req, res) => {
+    var studentid = Number(req.body.studentid);
+    var { fname, lname, email, phoneno, city, state } = req.body;
+    var orderby = req.query.orderby;
+    var sortby = req.query.sortby;
+    let recordsinonepage = 200;
+    var pagenumber = req.query.pageid;
 
-  console.log(req.body);
-  const fname = req.body.std_fname;
-  const lname = req.body.std_lname;
-  const gender = req.body.gender;
-  const dob = req.body.dob;
-  const city = req.body.city;
-  const country = req.body.country;
-  const sem = req.body.sem;
-
-  let sql = "";
-  let stdId = "";
-  if (req.body.input) {
-    sql = `select * from Student_Master_feb26 where sid in (${req.body.input})`;
-  } else if (req.query.stdId) {
-    stdId = req.query.stdId;
-    sql = `select * from Student_Master_feb26 where sid in (${req.query.stdId})`;
-  } else if (
-    fname != undefined &&
-    lname != undefined &&
-    gender != undefined &&
-    dob != undefined &&
-    city != undefined &&
-    country != undefined &&
-    sem != undefined
-  ) {
-    sql = `select * from Student_Master_feb26 where fname like '${fname}%' && lname like '${lname}%' && gender like '${gender}%' && city like '${city}%' && countrycode like '${country}%'`;
-  } else {
-    sql = `select * from Student_Master_feb26`;
-  }
-
-  const records = 10;
-  const newsql = sql.replace("*", "count(*)");
-
-  con.query(
-    sql + ` limit ${count * records - records},${records};`,
-    function (err, result, fields) {
-      if (err) {
-        console.log(err);
-        res.send("data not found");
-      } else {
-        con.query(`select count(*) from Student_Master_feb26;`, function (err, total) {
-          const totalData = Object.values(total[0])[0];
-
-          if (count == null || count < 1) {
-            count = 1;
-          }
-          if (count >= total / records) {
-            count = total / records;
-          }
-
-          let cols = [];
-          fields.forEach((element) => {
-            cols.push(element.name);
-          });
-
-          if (stdId <= totalData) {
-            res.render("SpfSearchView/table", {
-              count: count,
-              cols: cols,
-              result: result,
-              total: totalData,
-              records: records,
-              stdId: stdId,
-
-              std_fname: fname,
-              std_lname: lname,
-              gender: gender,
-              dob: dob,
-              city: city,
-              country: country,
-              sem: sem,
-            });
-          } else {
-            res.send("data not found");
-          }
-        });
-      }
+    if (
+        orderby == undefined ||
+        orderby == null ||
+        sortby == undefined ||
+        sortby == null
+    ) {
+        orderby = "StudentID";
+        sortby = "asc";
     }
-  );
-  function render(sql) {}
+
+    if (
+        req.query.fname ||
+        req.query.state ||
+        req.query.lname ||
+        req.query.city
+    ) {
+        fname = req.query.fname;
+        state = req.query.state;
+        lname = req.query.lname;
+        city = req.query.city;
+    }
+
+    if (pagenumber <= 0 || pagenumber == null) {
+        pagenumber = 1;
+    }
+
+    if (pagenumber == 1) {
+        var start = 0;
+    } else {
+        var start = (pagenumber - 1) * recordsinonepage;
+    }
+
+    var select = `select sid As StudentID,fname As FirstName ,lname As LastName, email As Email,phone As MobileNumber,age as Age, gender As Gender, city As City,zipcode As PinCode from Student_Master_feb26 limit ${start},${recordsinonepage}`;
+    if (studentid || fname || lname || email || phoneno || city || state) {
+        select = `select sid As StudentID, fname As FirstName, lname As LastName, email As Email, phone As MobileNumber,age as Age, gender As Gender, city As City, zipcode As PinCode from Student_Master_feb26 where sid like '${studentid}' or fname like '${fname}' or email like '${email}' or lname like '${lname}' or phone like '${phoneno}' 
+                or city like '${city}' limit ${start},${recordsinonepage}` ;
+    }
+
+    con.query(select, (err, row, col) => {
+        if (err) {
+            throw err;
+        } else {
+            res.render("SpfSearchView/table", {
+                row: row,
+                col: col,
+                pageid: pagenumber,
+                orderby: orderby,
+                sortby: sortby,
+                fname: fname,
+                state: state,
+                city: city,
+                lname: lname,
+            });
+        }
+    });
 };
+module.exports = { studentlist };

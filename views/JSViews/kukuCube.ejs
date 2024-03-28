@@ -44,7 +44,12 @@
             font-size: 50px;
 
         }
-        
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 
@@ -57,8 +62,8 @@
         <span id="score"></span>
     </span>
     <button class="btn" onclick="StartTime()">Start</button>
-    <span id="timetext">Timmer :</span>
-    <span class="timmer"></span>
+    <span id="timetext">Timmer :<span class="timmer"></span></span>
+    
     <div id="Res"></div>
     <table id="main">
         <tr>
@@ -83,7 +88,7 @@
 
         var timer = document.querySelector(".timmer");
         function StartTime() {
-            second = 5;
+            second = 60;
             gameStart();
             intvl = setInterval(timmer, 1000);
             timmer();

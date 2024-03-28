@@ -1,9 +1,10 @@
 const express = require('express'); 
 const {authServices}=require('../../controller/controller')
+const {studentlist}=require('../../controller/SpecificSearchquery')
 const spfSearchRouter = express.Router();
 const query = require("../../controller/SpecificSearchquery");
-spfSearchRouter.get("/tasks/SearchSpecific",authServices, query.runQuery); 
-spfSearchRouter.get("/input",authServices, query.runQuery); 
-spfSearchRouter.post("/tasks/SearchSpecific",authServices, query.runQuery);
-spfSearchRouter.post("/input",authServices, query.runQuery);
+spfSearchRouter.get('/studentlist',authServices,studentlist)
+spfSearchRouter.post('/studentlist',authServices,studentlist)
+spfSearchRouter.get("/tasks/SearchSpecific",authServices, studentlist); 
+spfSearchRouter.post("/tasks/SearchSpecific",authServices, studentlist);
 module.exports=spfSearchRouter

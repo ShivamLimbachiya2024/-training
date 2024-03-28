@@ -1,307 +1,120 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        #container {
-  display: flex;
-  justify-content: center;
-}
-#holder {
-  display: flex;
-  flex-direction: column;
-}
-#selecter {
-  display: flex;
-  justify-content: center;
-}
-
-table,
-td,
-th {
-  margin: 20px;
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-td {
-  padding: 10px;
-}
-th {
-  background-color: blue;
-  color: white;
-  padding: 10px;
-}
-h1 {
-  text-align: center;
-  text-decoration: underline;
-}
-.container {
-  display: flex;
-  justify-content: left;
-}
-.navigation {
-  display: flex;
-}
-.submit {
-  background-color: red;
-  border: none;
-  width: 50px;
-  height: 50px;
-  margin: 20px;
-}
-#view {
-  margin: 20px;
-
-  border: none;
-  height: 30px;
-  width: 100px;
-  background-color: lightskyblue;
-  font-size: large;
-}
-#viewDiv {
-  display: flex;
-  justify-content: center;
-}
-#upper {
-  display: flex;
-  justify-content: space-between;
-}
-.form {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.count {
-  padding: 0 10px;
-}
-.input {
-  margin: 10px;
-  width: 240px;
-  height: 45px;
-  font-size: large;
-}
-.fields {
-  display: flex;
-
-  flex-direction: column;
-  text-align: center;
-}
-#moreBlock {
-  visibility: hidden;
-}
-button {
-  margin: 0 10px;
-}
-
-a:link {
-  color: black;
-}
-
-a:visited {
-  color: black;
-}
-
-a:hover {
-  color: blue;
-}
-
-a:active {
-  color: black;
-}
-a {
-  text-decoration: none;
-}
-form {
-  display: flex;
-  align-items: center;
-}
+        .container {
+            max-width: 1140px;
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
-  </head>
-  <body>
-    <div id="container">
-      <div class="holder">
-        <div id="form1" class="form">
-          <form action="/input?id=1" method="POST">
-            <input
-              class="input"
-              placeholder="std_id(1,2,3,...)"
-              type="text"
-              name="input"
-              tabindex="1"
-              autofocus
-              value="<%=stdId%>"
-            />
-            <input class="submit" type="submit" value="GO!" />
-          </form>
-        </div>
+</head>
 
-        <div id="viewDiv">
-          <button id="view" onclick="visible()">View more</button>
-        </div>
+<body class="container">
+    <% var colname; %>
+        <form class="form-inline my-5" action="/studentlist" method="post">
+            <input autofocus class="form-control mr-sm-2" id="studentid" name="studentid" type="search"
+                placeholder="Search Student Id" aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-primary mx-2" type="button" onclick="seemore()">See More</button>
+            <div id="seemore" class="d-none align-content-center justify-content-center flex-wrap my-5 row">
+                <div class="col">
+                    <label for="fname">First Name</label>
+                    <input autofocus class="form-control mr-sm-2" id="fname" name="fname" type="search"
+                        placeholder="Search Firstname" aria-label="Search">
+                </div>
+                <div class="col">
+                    <label for="lname">Last Name</label>
+                    <input autofocus class="form-control mr-sm-2" id="lname" name="lname" type="search"
+                        placeholder="Search Lastname" aria-label="Search">
+                </div>
+                <div class="col">
+                    <label for="email">Email</label>
+                    <input autofocus class="form-control mr-sm-2" id="email" name="email" type="search"
+                        placeholder="Search Email" aria-label="Search">
+                </div>
+                <div class="col">
+                    <label for="phoneno">Mobile Number</label>
+                    <input autofocus class="form-control mr-sm-2" id="phoneno" name="phoneno" type="search"
+                        placeholder="Search Mobile number" aria-label="Search">
+                </div>
 
-        <div id="moreBlock">
-          <form class="form" action="/input?id=1" method="POST">
-            <div class="fields">
-              First Name:<input
-                class="input"
-                type="text"
-                name="std_fname"
-                value="<%=std_fname%>"
-                tabindex="1"
-                autofocus
-              />
+                <div class="col">
+                    <label for="city">City</label>
+                    <input autofocus class="form-control mr-sm-2" id="city" name="city" type="search"
+                        placeholder="Search city" aria-label="Search">
+                </div>
+                <div class="col d-flex justify-content-center align-items-end">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                </div>
             </div>
-            <div class="fields">
-              Last Name:
-              <input
-                class="input"
-                type="text"
-                name="std_lname"
-                value="<%=std_lname%>"
-                tabindex="2"
-              />
-            </div>
-            <div class="fields">
-              Gender:
-              <input
-                class="input"
-                type="text"
-                name="gender"
-                value="<%=gender%>"
-                tabindex="3"
-              />
-            </div>
-            <div class="fields">
-              City:
-              <input
-                class="input"
-                type="text"
-                name="city"
-                value="<%=city%>"
-                tabindex="5"
-              />
-            </div>
-            <div class="fields">
-              Country:
-              <input
-                class="input"
-                type="text"
-                name="country"
-                value="<%=country%>"
-                tabindex="6"
-              />
-            </div>
+        </form>
 
-
-            <input class="submit" type="submit" value="GO!" />
-          </form>
-        </div>
-
-        <%try {%>
-        <div class="navigation">
-          <div class="count">
-            <a href="/input?id=1">
-              <%if( count==1){%>
-              <button disabled><<</button>
-              <%}else{%>
-              <button><<</button>
-              <%}%>
-            </a>
-          </div>
-
-          <div class="count">
-            <a href="/input?id=<%=Number(count)-1%>"
-              ><%if( count==1){%>
-              <button disabled><</button>
-              <%}else{%>
-              <button><</button>
-              <%}%></a
-            >
-          </div>
-          <div class="count"><%=Math.ceil(count)%></div>
-
-          <div class="count">
-            <a href="/input?id=<%=Number(count)+1%>"
-              ><%if( count==total/records){%>
-              <button disabled>></button>
-              <%}else{%>
-              <button>></button>
-              <%}%></a
-            >
-          </div>
-          <div class="count">
-            <a href="/input?id=<%=total/records%>"
-              ><%if( count==total/records){%>
-              <button disabled>>></button>
-              <%}else{%>
-              <button>>></button>
-              <%}%></a
-            >
-          </div>
-        </div>
-
-        <div class="table">
-          <table border="1">
-            <tr>
-              <%cols.forEach((col)=>{%>
-              <th>
-                <div><%=col%></div>
-              </th>
-              <%});%>
-            </tr>
-
-            <%result.forEach((element) => {%>
-            <tr>
-              <%for (let i = 0; i < cols.length; i++) {%>
-              <td><%=Object.values(element)[i]%></td>
-              <%}%>
-            </tr>
-            <%});%>
-          </table>
-        </div>
-
-        <%} catch (error) {}%>
-      </div>
-    </div>
-
-    <%if(std_fname != undefined || std_lname != undefined || gender != undefined
-    || dob != undefined || city != undefined || country != undefined || sem !=
-    undefined ){%>
+<div class="d-flex  justify-content-center">
+  <% if(pageid == 1) { %>
+    <div class="btn border border-danger" style="pointer-events: none; cursor: default;"  ><a  href="/studentlist?pageid=<%=1%>&orderby=<%=orderby%>&sortby=<%=sortby%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> << </a></div>
+    <div class="btn border border-danger" style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=Number(pageid)-1%>&orderby=<%=orderby %>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> < </a> </div>
+    <%} else { %>
+      <div class="btn border border-danger"> <a href="/studentlist?pageid=<%=1%>&orderby=<%=orderby%>&sortby=<%=sortby%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> << </a></div>
+      <div class="btn border border-danger" ><a href="/studentlist?pageid=<%=Number(pageid)-1%>&orderby=<%=orderby%>&sortby=<%=sortby%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> < </a> </div>
+  <%}%>
+  <div class="btn border border-danger" ><a href=""><%=pageid%></a></div>
+  
+  <% if(pageid == 250) { %>
+      <div class="btn border border-danger" style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=Number(pageid)+1%>&orderby=<%=orderby%>&sortby=<%=sortby%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> > </a></div>
+      <div class="btn border border-danger" style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=250%>&orderby=<%=orderby%>&sortby=<%=sortby%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> >> </a></div>
+  <%} else { %>
+          <div class="btn border border-danger" ><a href="/studentlist?orderby=<%=orderby%>&sortby=<%=sortby%>&pageid=<%=Number(pageid)+1%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> > </a></div>
+          <div class="btn border border-danger" ><a href="/studentlist?orderby=<%=orderby%>&sortby=<%=sortby%>&pageid=<%=250%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> >> </a></div>
+  <%}%>
+</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <%for (let value in col) { %>
+                            <td class="bg-warning">
+                                <div class="d-flex justify-content-between ">
+                                    
+                                        <%= col[value].name %>
+                                            <% colname=col[value].name %>
+                                   
+                                </div>
+                            </td>
+                            <%} %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%for(let i=0; i < row.length;i++) {%>
+                        <tr>
+                            <% for(let j=0; j < col.length; j++) {%>
+                                <td>
+                                    <%= row[i][col[j].name] %>
+                                </td>
+                                <%}%>
+                        </tr>
+                        <%}%>
+                </tbody>
+            </table>
     <script>
-      function visible() {
-        const view = document.getElementById("view");
-        const moreBlock = document.getElementById("moreBlock");
-        if (view.innerHTML == "View more") {
-          moreBlock.style.visibility = "visible";
-          view.innerHTML = "View less";
-          const form1 = document.getElementById("form1");
-          console.log(form1);
-          form1.forEach((element) => {
-            element.disabled = true;
-          });
-        } else {
-          moreBlock.style.visibility = "hidden";
-          view.innerHTML = "View more";
+        function seemore(){
+            var div = document.getElementById('seemore');
+            div.classList.replace('d-none','d-flex')
+            console.log(div.classList.replace('d-none','d-flex'));
         }
-      }
-      visible();
     </script>
-    <%}%>
-    <script>
-      function visible() {
-        const view = document.getElementById("view");
-        const moreBlock = document.getElementById("moreBlock");
-        if (view.innerHTML == "View more") {
-          moreBlock.style.visibility = "visible";
-          view.innerHTML = "View less";
-          document.getElementById("form2").disabled = true;
-        } else {
-          moreBlock.style.visibility = "hidden";
-          view.innerHTML = "View more";
-        }
-      }
-    </script>
-  </body>
+</body>
+
 </html>
