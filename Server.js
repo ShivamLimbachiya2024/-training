@@ -7,6 +7,9 @@ const cookieParser = require("cookie-parser");
 const PageRouter = require("./routes/Pageand Sorting/pageandsortrouter.js");
 const reportRouter = require("./routes/ReportsRoutes/reportRoute.js");
 const delRouter = require("./routes/DelSearchRoute/delRouter.js");
+const frontRouter = require("./routes/fetchApiRoutes/fetchApiRoutes.js");
+const ajaxcurdRouter = require("./routes/AjaxCurdRouter/AjaxCurdrouter.js");
+const spfSearchRouter = require("./routes/SecarchSpecificrouter/specificSearchrouter.js");
 require("dotenv").config();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -15,7 +18,7 @@ app.use("/public", express.static("public"));
 
 app.set("view engine", "ejs");
 
-app.use("/", userRoute, JSRoute,CSSRoute,PageRouter,reportRouter,delRouter);
+app.use("/", userRoute, JSRoute,CSSRoute,PageRouter,reportRouter,delRouter,frontRouter,ajaxcurdRouter,spfSearchRouter);
 app.listen(process.env.PORT || 8080, () => {
     console.log("Server is listening on 8080...");
 });

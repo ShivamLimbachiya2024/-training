@@ -21,6 +21,9 @@
     </style>
 </head>
 <body>
+    <div id="logout">
+        <button onclick="deleteAllCookies()">Logout</button>
+    </div>
     <div class="container">
         <table>
             <tr>
@@ -83,7 +86,38 @@
                 <td>Delimeter Search</td>
                 <td><a href="/tasks/DelimeterSearch">View Project</a></td>
             </tr>
+            <tr>
+                <td>12</td>
+                <td>Fetch API using json placeholder</td>
+                <td><a href="/tasks/fetchApiFrontend">View Project</a></td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>Job Application CURD with Ajax</td>
+                <td><a href="/tasks/JobAppWithAjax">View Project</a></td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>Search With Specific input In Student Database</td>
+                <td><a href="/tasks/SearchSpecific">View Project</a></td>
+            </tr>
         </table>
     </div>
+    <script>
+
+
+function deleteAllCookies() {
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+    location.reload()
+}
+
+    </script>
 </body>
 </html>

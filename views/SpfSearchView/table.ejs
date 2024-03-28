@@ -1,0 +1,307 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        #container {
+  display: flex;
+  justify-content: center;
+}
+#holder {
+  display: flex;
+  flex-direction: column;
+}
+#selecter {
+  display: flex;
+  justify-content: center;
+}
+
+table,
+td,
+th {
+  margin: 20px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+td {
+  padding: 10px;
+}
+th {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+}
+h1 {
+  text-align: center;
+  text-decoration: underline;
+}
+.container {
+  display: flex;
+  justify-content: left;
+}
+.navigation {
+  display: flex;
+}
+.submit {
+  background-color: red;
+  border: none;
+  width: 50px;
+  height: 50px;
+  margin: 20px;
+}
+#view {
+  margin: 20px;
+
+  border: none;
+  height: 30px;
+  width: 100px;
+  background-color: lightskyblue;
+  font-size: large;
+}
+#viewDiv {
+  display: flex;
+  justify-content: center;
+}
+#upper {
+  display: flex;
+  justify-content: space-between;
+}
+.form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.count {
+  padding: 0 10px;
+}
+.input {
+  margin: 10px;
+  width: 240px;
+  height: 45px;
+  font-size: large;
+}
+.fields {
+  display: flex;
+
+  flex-direction: column;
+  text-align: center;
+}
+#moreBlock {
+  visibility: hidden;
+}
+button {
+  margin: 0 10px;
+}
+
+a:link {
+  color: black;
+}
+
+a:visited {
+  color: black;
+}
+
+a:hover {
+  color: blue;
+}
+
+a:active {
+  color: black;
+}
+a {
+  text-decoration: none;
+}
+form {
+  display: flex;
+  align-items: center;
+}
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="holder">
+        <div id="form1" class="form">
+          <form action="/input?id=1" method="POST">
+            <input
+              class="input"
+              placeholder="std_id(1,2,3,...)"
+              type="text"
+              name="input"
+              tabindex="1"
+              autofocus
+              value="<%=stdId%>"
+            />
+            <input class="submit" type="submit" value="GO!" />
+          </form>
+        </div>
+
+        <div id="viewDiv">
+          <button id="view" onclick="visible()">View more</button>
+        </div>
+
+        <div id="moreBlock">
+          <form class="form" action="/input?id=1" method="POST">
+            <div class="fields">
+              First Name:<input
+                class="input"
+                type="text"
+                name="std_fname"
+                value="<%=std_fname%>"
+                tabindex="1"
+                autofocus
+              />
+            </div>
+            <div class="fields">
+              Last Name:
+              <input
+                class="input"
+                type="text"
+                name="std_lname"
+                value="<%=std_lname%>"
+                tabindex="2"
+              />
+            </div>
+            <div class="fields">
+              Gender:
+              <input
+                class="input"
+                type="text"
+                name="gender"
+                value="<%=gender%>"
+                tabindex="3"
+              />
+            </div>
+            <div class="fields">
+              City:
+              <input
+                class="input"
+                type="text"
+                name="city"
+                value="<%=city%>"
+                tabindex="5"
+              />
+            </div>
+            <div class="fields">
+              Country:
+              <input
+                class="input"
+                type="text"
+                name="country"
+                value="<%=country%>"
+                tabindex="6"
+              />
+            </div>
+
+
+            <input class="submit" type="submit" value="GO!" />
+          </form>
+        </div>
+
+        <%try {%>
+        <div class="navigation">
+          <div class="count">
+            <a href="/input?id=1">
+              <%if( count==1){%>
+              <button disabled><<</button>
+              <%}else{%>
+              <button><<</button>
+              <%}%>
+            </a>
+          </div>
+
+          <div class="count">
+            <a href="/input?id=<%=Number(count)-1%>"
+              ><%if( count==1){%>
+              <button disabled><</button>
+              <%}else{%>
+              <button><</button>
+              <%}%></a
+            >
+          </div>
+          <div class="count"><%=Math.ceil(count)%></div>
+
+          <div class="count">
+            <a href="/input?id=<%=Number(count)+1%>"
+              ><%if( count==total/records){%>
+              <button disabled>></button>
+              <%}else{%>
+              <button>></button>
+              <%}%></a
+            >
+          </div>
+          <div class="count">
+            <a href="/input?id=<%=total/records%>"
+              ><%if( count==total/records){%>
+              <button disabled>>></button>
+              <%}else{%>
+              <button>>></button>
+              <%}%></a
+            >
+          </div>
+        </div>
+
+        <div class="table">
+          <table border="1">
+            <tr>
+              <%cols.forEach((col)=>{%>
+              <th>
+                <div><%=col%></div>
+              </th>
+              <%});%>
+            </tr>
+
+            <%result.forEach((element) => {%>
+            <tr>
+              <%for (let i = 0; i < cols.length; i++) {%>
+              <td><%=Object.values(element)[i]%></td>
+              <%}%>
+            </tr>
+            <%});%>
+          </table>
+        </div>
+
+        <%} catch (error) {}%>
+      </div>
+    </div>
+
+    <%if(std_fname != undefined || std_lname != undefined || gender != undefined
+    || dob != undefined || city != undefined || country != undefined || sem !=
+    undefined ){%>
+    <script>
+      function visible() {
+        const view = document.getElementById("view");
+        const moreBlock = document.getElementById("moreBlock");
+        if (view.innerHTML == "View more") {
+          moreBlock.style.visibility = "visible";
+          view.innerHTML = "View less";
+          const form1 = document.getElementById("form1");
+          console.log(form1);
+          form1.forEach((element) => {
+            element.disabled = true;
+          });
+        } else {
+          moreBlock.style.visibility = "hidden";
+          view.innerHTML = "View more";
+        }
+      }
+      visible();
+    </script>
+    <%}%>
+    <script>
+      function visible() {
+        const view = document.getElementById("view");
+        const moreBlock = document.getElementById("moreBlock");
+        if (view.innerHTML == "View more") {
+          moreBlock.style.visibility = "visible";
+          view.innerHTML = "View less";
+          document.getElementById("form2").disabled = true;
+        } else {
+          moreBlock.style.visibility = "hidden";
+          view.innerHTML = "View more";
+        }
+      }
+    </script>
+  </body>
+</html>

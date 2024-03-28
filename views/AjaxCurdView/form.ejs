@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            max-width: 1140px;
+            margin: auto;
+        }
+
+        fieldset table {
+            margin: auto;
+        }
+
+        #pagecomp {
+            text-align: center;
+        }
+
+        #list {
+            text-align: center;
+        }
+        .delBtn{
+            border: 1px solid;
+        }
+    </style>
+</head>
+
+<body onload="loadApiData()">
+    <div id="pagecomp">
+        <button id="prevbtn">Previous</button>
+        <button id="nextbtn">Next</button>
+    </div>
+    <div id="list"></div>
+    <div class="container">
+        <form id="myFrom">
+            <fieldset>
+                <legend><b>Basic Details</b></legend>
+                <table>
+
+                    <tr>
+                        <input type="hidden" name="eid" id="eid">
+                        <td>
+                            <label for="fname"> First Name: </label>
+                        </td>
+                        <td>
+                            <input type="text" name="fname" id="fname">
+                        </td>
+                        <td>
+                            <label for="lname">Last Name:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="lname" id="lname">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="designation">Designation:</label>
+
+                        </td>
+                        <td>
+                            <input type="text" name="designation" id="designation">
+                        </td>
+                        <td>
+                            <label for="add1">Address1:</label>
+                        </td>
+                        <td>
+                            <textarea name="add1" id="add1" cols="30" rows="1"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="email">Email:</label>
+
+                        </td>
+                        <td>
+                            <input type="text" maxlength="120" name="email" id="email">
+                        </td>
+                        <td>
+                            <label for="add2">Address2:</label>
+
+                        </td>
+                        <td>
+                            <textarea name="add2" id="add2" cols="30" rows="1"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="phone">Phone:</label>
+
+                        </td>
+                        <td>
+                            <input type="text" name="phone" id="phone">
+                        </td>
+                        <td>
+                            <label for="city">City </label>
+
+                        </td>
+                        <td>
+                            <label for="cityselect">City</label>
+                            <select name="city" id="cityselect">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gender:
+
+                        </td>
+                        <td>
+                            <label><input type="radio" name="gender" id="M" value="M">Male</label>
+                            <label><input type="radio" name="gender" id="F" value="F">Female</label>
+                            <span id="gandermsg"></span>
+                        </td>
+                        <td>
+                            <label for="stateselect">State</label>
+                        </td>
+                        <td>
+                            <select name="state" id="stateselect" onchange="fetchCity()">
+                                <option value="">Select</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="rstatus">Relationship Status: </label>
+
+                        </td>
+                        <td>
+                            <select name="rstatus" id="rstatus">
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                            </select>
+                        </td>
+                        <td>
+                            <label for="zipcode">Zipcode: </label>
+
+                        </td>
+                        <td>
+                            <input type="text" name="zipcode" id="zipcode">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="dob">Date of Birth: </label>
+
+                        </td>
+                        <td>
+                            <input type="text" name="dob" id="dob">
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend><b>Education Detail</b></legend>
+                <table>
+                    <tr>
+                        <td>
+                            <u>SSC Result</u>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="eduid[]">
+                            <label for="sboard">Course Name</label><input type="text" name="course[]" id="sboard">
+                        </td>
+                        <td>
+                            <label for="s_year">Passing Year</label> <input type="text" name="pass_year[]" id="s_year">
+                        </td>
+                        <td>
+                            <label for="s_per">Percentage</label><input type="text" name="perc[]" id="s_per">
+                            <input type="hidden" name="isdelEdu[]">
+                            <p class="delBtn">Delete</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <u>HSC Result</u>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="eduid[]">
+                            <label for="hboard">Course Name</label><input type="text" name="course[]" id="hboard">
+                        </td>
+                        <td>
+                            <label for="h_year">Passing Year</label> <input type="text" name="pass_year[]" id="h_year">
+                        </td>
+                        <td>
+                            <label for="h_per">Percentage</label><input type="text" name="perc[]" id="h_per">
+                            <input type="hidden" name="isdelEdu[]">
+                            <p class="delBtn">Delete</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <u> Bachelor Degree:</u>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <input type="hidden" name="eduid[]">
+                            <label for="b_cname">Course Name </label><input type="text" name="course[]" id="b_cname">
+                        </td>
+                        <td>
+                            <label for="b_year">Passing Year</label> <input type="text" name="pass_year[]" id="b_year">
+
+                        </td>
+                        <td>
+                            <label for="b_per">Percentage</label><input type="text" name="perc[]" id="b_per">
+                            <input type="hidden" name="isdelEdu[]">
+                            <p class="delBtn">Delete</p>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <u>Master Degree:</u>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <input type="hidden" name="eduid[]">
+                            <label for="m_cname">Course Name </label><input type="text" name="course[]" id="m_cname">
+
+                        </td>
+                        <td>
+
+                            <label for="m_year">Passing Year</label> <input type="text" name="pass_year[]" id="m_year">
+
+                        </td>
+                        <td>
+                            <label for="m_per">Percentage</label><input type="text" name="perc[]" id="m_per">
+                            <input type="hidden" name="isdelEdu[]">
+                            <p class="delBtn">Delete</p>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend><b>Work Experience</b></legend>
+                <table>
+                    <tr>
+                        <td>
+
+                            <input type="hidden" name="comid[]">
+                            <label for="com_name1">Company Name </label><input type="text" name="com_name[]"id="com_name1">
+                        </td>
+                        <td>
+
+                            <label for="deg_name1">Designation </label><input type="text" name="deg_name[]"id="deg_name1">
+                        </td>
+                        <td>
+
+                            <label for="exp_from1">From</label><input type="text" name="exp_from[]" id="exp_from1">
+                        </td>
+                        <td>
+                            <label for="exp_to1">To</label> <input type="text" name="exp_to[]" id="exp_to1">
+                            <input type="hidden" name="isDelCom[]">
+                            <p class="delBtn">Delete</p>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <input type="hidden" name="comid[]">
+                            <label for="com_name3">Company Name </label><input type="text" name="com_name[]"id="com_name3">
+                        </td>
+                        <td>
+
+                            <label for="deg_name3">Designation </label><input type="text" name="deg_name[]"id="deg_name3">
+                        </td>
+                        <td>
+
+                            <label for="exp_from3">From</label><input type="text" name="exp_from[]" id="exp_from3">
+                        </td>
+                        <td>
+                            <label for="exp_to3">To</label> <input type="text" name="exp_to[]" id="exp_to3">
+                            <input type="hidden" name="isDelCom[]">
+                            <p class="delBtn">Delete</p>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="comid[]">
+                            <label for="com_name2">Company Name </label><input type="text" name="com_name[]"id="com_name2">
+
+                        </td>
+                        <td>
+                            <label for="deg_name2">Designation </label><input type="text" name="deg_name[]"id="deg_name2">
+
+
+                        </td>
+                        <td>
+                            <label for="exp_from2">From</label><input type="text" name="exp_from[]" id="exp_from2">
+                        </td>
+                        <td>
+                            <label for="exp_to2">To</label> <input type="text" name="exp_to[]" id="exp_to2">
+                            <input type="hidden" name="isDelCom[]">
+                            <p class="delBtn">Delete</p>
+
+
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend><b>Language known</b></legend>
+                <div><span id="langmsg"></span></div>
+                <table>
+
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" name="language[]" value="hindi" id="hindi">Hindi</label>
+                        </td>
+                        <td>
+                            <label><input type="checkbox" name="h_ability[]" value="read" id="h_ability1">Read</label>
+
+                        </td>
+                        <td>
+                            <label><input type="checkbox" name="h_ability[]" value="write" id="h_ability2">Write</label>
+
+                        </td>
+                        <td>
+                            <label><input type="checkbox" name="h_ability[]" value="speak" id="h_ability3">Speak</label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" name="language[]" value="gujarati"
+                                    id="gujarati">Gujarati</label>
+                        </td>
+                        <td>
+                            <label><input type="checkbox" name="g_ability[]" value="read" id="g_ability1">Read</label>
+
+                        </td>
+                        <td>
+
+                            <label><input type="checkbox" name="g_ability[]" value="write" id="g_ability2">Write</label>
+                        </td>
+                        <td>
+                            <label><input type="checkbox" name="g_ability[]" value="speak" id="g_ability3">Speak</label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" name="language[]" value="english" id="english">English</label>
+
+
+
+                        </td>
+                        <td>
+                            <label><input type="checkbox" name="e_ability[]" value="read" id="e_ability1">Read</label>
+
+                        </td>
+                        <td>
+                            <label><input type="checkbox" name="e_ability[]" value="write" id="e_ability2">Write</label>
+
+                        </td>
+                        <td>
+                            <label><input type="checkbox" name="e_ability[]" value="speak" id="e_ability3">Speak</label>
+
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend><b>Technologies You know</b></legend>
+                
+                <div><span id="tech_msg"></span></div>
+                <table>
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" name="tech_known[]" value="php" id="php">PHP</label>
+                        </td>
+                        <td>
+                            <label><input type="radio" name="php_ability" value="Beginer">Beginer</label>
+
+                        </td>
+                        <td>
+                            <label><input type="radio" name="php_ability" value="Mideator">Mideator</label>
+
+                        </td>
+                        <td>
+
+                            <label><input type="radio" name="php_ability" value="Expert">Expert</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <label><input type="checkbox" name="tech_known[]" value="mysql" id="mysql">Mysql</label>
+                        </td>
+                        <td>
+                            <label><input type="radio" name="mysql_ability" value="Beginer">Beginer</label>
+
+                        </td>
+                        <td>
+                            <label><input type="radio" name="mysql_ability" value="Mideator">Mideator</label>
+
+                        </td>
+                        <td>
+                            <label><input type="radio" name="mysql_ability" value="Expert">Expert</label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <label><input type="checkbox" name="tech_known[]" value="laravel"id="laravel">Laravel</label>
+                        </td>
+                        <td>
+                            <label><input type="radio" name="laravel_ability" value="Beginer">Beginer</label>
+
+                        </td>
+                        <td>
+                            <label><input type="radio" name="laravel_ability" value="Mideator">Mideator</label>
+                        </td>
+                        <td>
+
+                            <label><input type="radio" name="laravel_ability" value="Expert">Expert</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" name="tech_known[]" value="oracle" id="oracle">Oracle</label>
+                        </td>
+                        <td>
+                            <label><input type="radio" name="oracle_ability" value="Beginer">Beginer</label>
+
+                        </td>
+                        <td>
+                            <label><input type="radio" name="oracle_ability" value="Mideator">Mideator</label>
+
+                        </td>
+                        <td>
+
+                            <label><input type="radio" name="oracle_ability" value="Expert">Expert</label>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend><b>Refrence Contact</b></legend>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="contId[]">
+                            <label for="cont_name1">Name </label><input type="text" name="cont_name[]" id="cont_name1">
+
+                        </td>
+                        <td>
+                            <label for="cont_num1">Contact number</label> <input type="text" name="cont_num[]"
+                                id="cont_num1">
+
+                        </td>
+                        <td>
+                            <label for="cont_rel1">Relation </label><input type="text" name="cont_rel[]" id="cont_rel1">
+                            <input type="hidden" name="isDelcont[]">
+                            <p class="delBtn">Delete</p>
+                            <br><br>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="contId[]">
+                            <label for="cont_name2">Name </label><input type="text" name="cont_name[]" id="cont_name2">
+
+                        </td>
+                        <td>
+                            <label for="cont_num2">Contact number</label><input type="text" name="cont_num[]"
+                                id="cont_num2">
+
+                        </td>
+                        <td>
+                            <label for="cont_rel2">Relation </label><input type="text" name="cont_rel[]" id="cont_rel2">
+                            <input type="hidden" name="isDelcont[]">
+                            <p class="delBtn">Delete</p>
+                            <br><br>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset id="lastField">
+                <legend><b>Prefrences</b></legend>
+                <table>
+                    <td>
+                        <label for="pref_loc">Preferd Location :</label>
+                        <select name="pref_loc" id="pref_loc" required>
+                            <option value="">Plz Select</option>
+                            <option value="Ahmedabad">Ahmedabad</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Banglore">Banglore</option>
+                            <option value="Mumbai">Mumbai</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label for="not_pir">Notice Period</label> <input type="text" name="not_pir" id="not_pir" required>
+                    </td>
+                    <td>
+                        <label for="dept">Department</label>
+                        <select name="dept" id="dept" required>
+                            <option value="">Plz Select</option>
+                            <option value="Digital_marketing">Digital Marketing</option>
+                            <option value="Development">Development</option>
+                            <option value="HR">HR</option>
+                            <option value="Management">Management</option>
+                        </select>
+                    </td>
+
+                    <tr>
+                        <td>
+                            <label for="e_ctc">Expected CTC </label><input type="text" name="e_ctc" id="e_ctc" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="c_ctc">Current CTC </label><input type="text" name="c_ctc" id="c_ctc" required>
+
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" value="submit" name="submit" id="submit">
+            </fieldset>
+        </form>
+
+    </div>
+    <script src="/public/AjaxCurdScript/script.js"></script>
+</body>
+
+</html>

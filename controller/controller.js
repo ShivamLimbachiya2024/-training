@@ -96,7 +96,7 @@ const authServices=async(req,res,next)=>{
         if (userStatus=="active") {
             next()
         }else{
-            res.render('Login')
+            res.redirect('Login')
         }
     }
 }

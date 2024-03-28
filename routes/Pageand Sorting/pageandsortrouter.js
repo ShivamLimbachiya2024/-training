@@ -1,7 +1,8 @@
 const express = require('express');
+const {authServices}=require('../../controller/controller')
 const pageRouter = express.Router(); 
 const {listFunc,orderFunc,homeFunc}=require('../../controller/pagecontroller/controller')
-pageRouter.get('/tasks/PaginationAndSortingStu',homeFunc)
-pageRouter.get('/list',listFunc);
-pageRouter.get('/orderBy',orderFunc);
+pageRouter.get('/tasks/PaginationAndSortingStu',authServices,homeFunc)
+pageRouter.get('/list',authServices,listFunc);
+pageRouter.get('/orderBy',authServices,orderFunc);
 module.exports=pageRouter

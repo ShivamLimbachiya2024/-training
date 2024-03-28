@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            max-width: 1140px;
+            margin: auto;
+        }
+        table{
+            margin: auto;
+        }
+        table tr td{
+            border: 1px solid black;
+        }
+        table tr th{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+    <a href="/Create"><button>ADD EMP</button></a>
+    <%var keyObj=Object.keys(data[0]);%>
+    <table>
+        <tr>
+            <%for(let i=0;i<8;i++){%>
+                <%if(i==7){%>
+                    <th>UPDATE</th>
+                <%}else{%>
+                    <th><%=keyObj[i]%></th>
+                <%}%>
+            <%}%>
+        </tr>
+        <%for(let i=0;i<data.length;i++){%>
+                <tr>
+                    <%for(let j=0;j<8;j++){%>
+                        <%if(j==7){%>
+                            <td><a href="/Update?id=<%=data[i][keyObj[0]]%>">Update</a></td>
+                        <%}else{%>
+                            <td><%=data[i][keyObj[j]]%></td>
+                            <%}%>
+                        <%}%>                    
+                </tr>
+        <%}%>
+    </table>
+   </div>
+</body>
+</html>
