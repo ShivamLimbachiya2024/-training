@@ -1,7 +1,7 @@
 <div>
-    <a href="/list/?page=<%=1%>"><button><<</button></a>
-    <a href="/list/?page=<%=Number(pageNum)-1%>"<%if(pageNum==1){%> onclick='return false;' <%}%> ><button><</button></a>
-    <a href=""><button><%=pageNum%></button></a>
-    <a href="/list/?page=<%=Number(pageNum)+1%>"<%if(pageNum==lastPage){%> onclick='return false;' <%}%>><button>></button></a>
-    <a href="/list/?page=<%=lastPage%>"><button>>></button></a>
+    <a href="/list/?page=<%=1%>"><button   class="btn btn-primary"><<</button></a>
+    <a href="/list/?page=<%=Number(pageNum)-1%>"<%if(pageNum==1){%> onclick='return false;' <%}%> ><button  class="btn btn-primary"><</button></a>
+    <a href=""><button class="btn btn-primary"><%=pageNum%></button></a>
+    <a href="/list/?page=<%=Number(pageNum)+1%>"<%if(pageNum==lastPage){%> onclick='return false;' <%}%>><button class="btn btn-primary">></button></a>
+    <a href="/list/?page=<%=lastPage%>"><button class="btn btn-primary">>></button></a>
 </div>

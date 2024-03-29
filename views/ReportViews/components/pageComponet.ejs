@@ -1,7 +1,7 @@
 <div>
-    <a href="/attenlist/?page=<%=1%>&month=<%=month%>"><button><<</button></a>
-    <a href="/attenlist/?page=<%=Number(pageNum)-1%>&month=<%=month%>"<%if(pageNum==1){%> onclick='return false;' <%}%> ><button><</button></a>
-    <a href=""><button><%=pageNum%></button></a>
-    <a href="/attenlist/?page=<%=Number(pageNum)+1%>&month=<%=month%>"<%if(pageNum==lastPage){%> onclick='return false;' <%}%>><button>></button></a>
-    <a href="/attenlist/?page=<%=lastPage%>&month=<%=month%>"><button>>></button></a>
+    <a href="/attenlist/?page=<%=1%>&month=<%=month%>"><button class="btn btn-primary"><<</button></a>
+    <a href="/attenlist/?page=<%=Number(pageNum)-1%>&month=<%=month%>"<%if(pageNum==1){%> onclick='return false;' <%}%> ><button class="btn btn-primary"><</button></a>
+    <a href=""><button class="btn btn-primary"><%=pageNum%></button></a>
+    <a href="/attenlist/?page=<%=Number(pageNum)+1%>&month=<%=month%>"<%if(pageNum==lastPage){%> onclick='return false;' <%}%>><button class="btn btn-primary">></button></a>
+    <a href="/attenlist/?page=<%=lastPage%>&month=<%=month%>"><button class="btn btn-primary">>></button></a>
 </div>

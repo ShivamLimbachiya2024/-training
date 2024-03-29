@@ -1,6 +1,11 @@
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown button
+        <%if((typeof sortBy === "undefined") || typeof order ==='undifined'){%>
+            Select your sort order
+        <%}else{%>
+        Sort By:<%=sortBy%>
+        orderBy By:<%=order%>
+        <%}%>
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="/orderBy?sortBy=lname&order=asc">orderBy lname asc</a>

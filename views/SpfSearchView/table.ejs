@@ -20,6 +20,9 @@
             justify-content: center;
             align-items: center;
         }
+        table{
+            border-radius: 10px;
+        }
     </style>
 </head>
 
@@ -65,27 +68,27 @@
 
 <div class="d-flex  justify-content-center">
   <% if(pageid == 1) { %>
-    <div class="btn border border-danger" style="pointer-events: none; cursor: default;"  ><a  href="/studentlist?pageid=<%=1%>&orderby=<%=orderby%>&sortby=<%=sortby%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> << </a></div>
-    <div class="btn border border-danger" style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=Number(pageid)-1%>&orderby=<%=orderby %>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> < </a> </div>
+    <div class="btn " style="pointer-events: none; cursor: default;"  ><a  href="/studentlist?pageid=<%=1%>"> <button class="btn btn-primary"><<</button>  </a></div>
+    <div class="btn " style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=Number(pageid)-1%>"> <button  class="btn btn-primary"><</button> </a> </div>
     <%} else { %>
-      <div class="btn border border-danger"> <a href="/studentlist?pageid=<%=1%>&orderby=<%=orderby%>&sortby=<%=sortby%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> << </a></div>
-      <div class="btn border border-danger" ><a href="/studentlist?pageid=<%=Number(pageid)-1%>&orderby=<%=orderby%>&sortby=<%=sortby%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> < </a> </div>
+      <div class="btn "> <a href="/studentlist?pageid=<%=1%>"> <button  class="btn btn-primary"><<</button> </a></div>
+      <div class="btn " ><a href="/studentlist?pageid=<%=Number(pageid)-1%>"> <button  class="btn btn-primary"><</button> </a> </div>
   <%}%>
-  <div class="btn border border-danger" ><a href=""><%=pageid%></a></div>
+  <div class="btn " ><a href=""><%=pageid%></a></div>
   
   <% if(pageid == 250) { %>
-      <div class="btn border border-danger" style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=Number(pageid)+1%>&orderby=<%=orderby%>&sortby=<%=sortby%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> > </a></div>
-      <div class="btn border border-danger" style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=250%>&orderby=<%=orderby%>&sortby=<%=sortby%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> >> </a></div>
+      <div class="btn " style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=Number(pageid)+1%>"> <button class="btn btn-primary" >></button> </a></div>
+      <div class="btn " style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=250%>"> <button  class="btn btn-primary">>></button> </a></div>
   <%} else { %>
-          <div class="btn border border-danger" ><a href="/studentlist?orderby=<%=orderby%>&sortby=<%=sortby%>&pageid=<%=Number(pageid)+1%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> > </a></div>
-          <div class="btn border border-danger" ><a href="/studentlist?orderby=<%=orderby%>&sortby=<%=sortby%>&pageid=<%=250%>&state=<%=state%>&fname=<%=fname%>&lanme=<%=lname%>&city=<%=city%>"> >> </a></div>
+          <div class="btn " ><a href="/studentlist?pageid=<%=Number(pageid)+1%>"> <button  class="btn btn-primary">></button> </a></div>
+          <div class="btn " ><a href="/studentlist?pageid=<%=250%>"> <button  class="btn btn-primary">>></button> </a></div>
   <%}%>
 </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <%for (let value in col) { %>
-                            <td class="bg-warning">
+                            <td class="bg-primary">
                                 <div class="d-flex justify-content-between ">
                                     
                                         <%= col[value].name %>

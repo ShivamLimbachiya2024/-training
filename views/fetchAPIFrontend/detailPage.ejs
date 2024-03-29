@@ -23,12 +23,25 @@
             max-width: 1140px;
             margin: auto;
         }
+        table tr th{
+            color: white;
+            background-color: #0069d9;
+            text-align: center;
+            vertical-align: middle;
+            }
+            table {
+            margin: auto;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+
+            }
     </style>
 </head>
 
 <body>
     <div class="cmtdiv">
-        <table>
+        <table cellspacing="0">
             <thead>
                 <tr>
                     <th>Key</th>
@@ -38,7 +51,7 @@
             <tbody id="tbody"></tbody>
         </table>
         <button onclick="testBtn()" id="showCmtBtn">Show Comments</button>
-        <table id="cmtTable">
+        <table id="cmtTable" cellspacing="0">
             <thead>
                 <tr>
                     <th>postId</th>
