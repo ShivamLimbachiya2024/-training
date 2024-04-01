@@ -14,17 +14,24 @@ const renderRegister = (req, res) => {
 };
 const registerUser = async (req, res) => {
     var userJson = req.body;
-    var resobj = await insertUser(userJson);
-    res.send(resobj);
+    try {
+        var resobj = await insertUser(userJson);
+        res.send(resobj);
+    } catch (error) {
+        console.log(error);
+    }
 };
 const enterPass = (req, res) => {
     insertPass(req.body);
     res.send("User is Now Active!");
 };
 const renderPasspage = async (req, res) => {
-    var actCode = req.query.actcode;
     var email = req.query.email;
-    var createAt = await fetchCreatedtime(email);
+    try {
+        var createAt = await fetchCreatedtime(email);
+    } catch (error) {
+        console.log(error);
+    }
     var dateDiff = new Date() - new Date(createAt);
     if (dateDiff < 10000) {
         res.render("passPage");
@@ -63,12 +70,20 @@ const userLogin = async (req, res) => {
     var userJson = req.body;
     const succesObj = { status: 200, token: "" };
     const failObj = { status: 400, token: "" };
-    const isUserExist = await checkUserExist(userJson);
+    try {
+        const isUserExist = await checkUserExist(userJson);
+    } catch (error) {
+        console.log(error);
+    }
     if (isUserExist == 1) {
-        const userSalt = await fetchSalt(userJson.username);
+        try {
+            const userSalt = await fetchSalt(userJson.username);
+            const pass = await fetchUserPass(userJson.username);
+        } catch (error) {
+            console.log(error);
+        }
         var stringToHash = userSalt + userJson.pass;
         var hash = md5(stringToHash);
-        const pass = await fetchUserPass(userJson.username);
         if (pass == hash) {
             let jwtSecretKey = process.env.JWT_SECRET_KEY;
             const token = jwt.sign(userJson, jwtSecretKey,{expiresIn: 86400 });
@@ -92,7 +107,11 @@ const authServices=async(req,res,next)=>{
     }else{
         var jwtSecretKey=process.env.JWT_SECRET_KEY;
         const decode = jwt.verify(token,jwtSecretKey);
-        var userStatus=await checkUserStatus(decode.username)
+        try {
+            var userStatus=await checkUserStatus(decode.username)
+        } catch (error) {
+            console.log(error);
+        }
         if (userStatus=="active") {
             next()
         }else{

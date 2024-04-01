@@ -22,8 +22,12 @@ const checkActiveStatus=(email)=>{
     })
 }
 const checkUserStatus = async(email)=>{
-    var isExistUser=await checkUserExist(email)
-    var isUserActive=await checkActiveStatus(email)
+    try {
+        var isExistUser=await checkUserExist(email)
+        var isUserActive=await checkActiveStatus(email)
+    } catch (error) {
+        console.log(error);
+    }
     if (isExistUser==0) {
         return "Not Exist";
     }

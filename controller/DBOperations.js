@@ -9,7 +9,11 @@ const insertUser = async (userJson) => {
     var failObj = { status: 400, actCode: '' ,email:userJson.email}
     var succesObj = { status: 200, actCode: activationLink ,email:userJson.email}
 
-    var countUser = await checkUserStatus(userJson.email)
+    try {
+        var countUser = await checkUserStatus(userJson.email)
+    } catch (error) {
+        console.log(error);
+    }
     if (countUser == 'Not Exist') {
         var sql = `INSERT INTO userData (timezone, salt, fname, lname, dob, gender, email,phone, state, city, activation_link) 
                     VALUES ('${userTimeZone}', '${userSalt}', '${userJson.fname}', '${userJson.lname}', '${userJson.dob}', '${userJson.gender}', '${userJson.email}', '${userJson.phone}', '${userJson.state}', '${userJson.city}', '${activationLink}');`;
@@ -21,7 +25,11 @@ const insertUser = async (userJson) => {
         return succesObj
     }
     if (countUser == "notActive") {
-        var oldActCode=await fetchActCode(userJson.email);
+        try {
+            var oldActCode=await fetchActCode(userJson.email);
+        } catch (error) {
+            console.log(error);
+        }
         succesObj.actCode=oldActCode;
         return succesObj;        
     }
@@ -42,7 +50,11 @@ const fetchCreatedtime=(email)=>{
     })
 }
 const insertPass=async(passObj)=>{
-    var salt=await fetchSalt(passObj.email)
+    try {
+        var salt=await fetchSalt(passObj.email)
+    } catch (error) {
+        console.log(error);
+    }
     var stringToHash=salt+passObj.password;
     var hash=md5(stringToHash)
     var sql = `UPDATE userData SET active_Status = '1', Upassword = '${hash}' WHERE email = '${passObj.email}';`
