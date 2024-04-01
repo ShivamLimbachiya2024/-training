@@ -71,14 +71,14 @@ const userLogin = async (req, res) => {
     const succesObj = { status: 200, token: "" };
     const failObj = { status: 400, token: "" };
     try {
-        const isUserExist = await checkUserExist(userJson);
+        var isUserExist = await checkUserExist(userJson);
     } catch (error) {
         console.log(error);
     }
     if (isUserExist == 1) {
         try {
-            const userSalt = await fetchSalt(userJson.username);
-            const pass = await fetchUserPass(userJson.username);
+            var userSalt = await fetchSalt(userJson.username);
+            var pass = await fetchUserPass(userJson.username);
         } catch (error) {
             console.log(error);
         }
