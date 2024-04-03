@@ -65,23 +65,22 @@
                 </div>
             </div>
         </form>
-
 <div class="d-flex  justify-content-center">
   <% if(pageid == 1) { %>
-    <div class="btn " style="pointer-events: none; cursor: default;"  ><a  href="/studentlist?pageid=<%=1%>"> <button class="btn btn-primary"><<</button>  </a></div>
-    <div class="btn " style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=Number(pageid)-1%>"> <button  class="btn btn-primary"><</button> </a> </div>
+    <div class="btn " style="pointer-events: none; cursor: default;"  ><a  href="/studentlist?pageid=<%=1%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button class="btn btn-primary"><<</button>  </a></div>
+    <div class="btn " style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=Number(pageid)-1%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button  class="btn btn-primary"><</button> </a> </div>
     <%} else { %>
-      <div class="btn "> <a href="/studentlist?pageid=<%=1%>"> <button  class="btn btn-primary"><<</button> </a></div>
-      <div class="btn " ><a href="/studentlist?pageid=<%=Number(pageid)-1%>"> <button  class="btn btn-primary"><</button> </a> </div>
+      <div class="btn "> <a href="/studentlist?pageid=<%=1%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button  class="btn btn-primary"><<</button> </a></div>
+      <div class="btn " ><a href="/studentlist?pageid=<%=Number(pageid)-1%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>""> <button  class="btn btn-primary"><</button> </a> </div>
   <%}%>
   <div class="btn " ><a href=""><%=pageid%></a></div>
   
-  <% if(pageid == 250) { %>
-      <div class="btn " style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=Number(pageid)+1%>"> <button class="btn btn-primary" >></button> </a></div>
-      <div class="btn " style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=250%>"> <button  class="btn btn-primary">>></button> </a></div>
+  <% if(pageid == totalPage) { %>
+      <div class="btn " style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=Number(pageid)+1%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button class="btn btn-primary" >></button> </a></div>
+      <div class="btn " style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=250%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button  class="btn btn-primary">>></button> </a></div>
   <%} else { %>
-          <div class="btn " ><a href="/studentlist?pageid=<%=Number(pageid)+1%>"> <button  class="btn btn-primary">></button> </a></div>
-          <div class="btn " ><a href="/studentlist?pageid=<%=250%>"> <button  class="btn btn-primary">>></button> </a></div>
+          <div class="btn " ><a href="/studentlist?pageid=<%=Number(pageid)+1%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button  class="btn btn-primary">></button> </a></div>
+          <div class="btn " ><a href="/studentlist?pageid=<%=250%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button  class="btn btn-primary">>></button> </a></div>
   <%}%>
 </div>
             <table class="table table-striped">

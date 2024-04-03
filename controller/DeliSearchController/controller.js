@@ -1,14 +1,11 @@
-const con = require('../modules/connection')
-exports.runQuery = (req, res) => {
+const con = require('../../modules/connection')
+const runQuery = (req, res) => {
     let body = req.body.input + ".";
-    // body = body.replace(/\s/g, "");
     body = body.split(" ").join("");
-    // console.log(temp);
     let fname = [];
     let lname = [];
     let email = [];
     let city = [];
-    let sem = [];
     let currentDel = 0;
     let nextDel = 0;
   
@@ -20,8 +17,7 @@ exports.runQuery = (req, res) => {
           body.charAt(i) == "$" ||
           body.charAt(i) == "{" ||
           body.charAt(i) == "}" ||
-          body.charAt(i) == "." ||
-          body.charAt(i) == ":"
+          body.charAt(i) == "." 
         ) {
           currentDel = i;
   
@@ -31,8 +27,7 @@ exports.runQuery = (req, res) => {
               body.charAt(j) == "$" ||
               body.charAt(j) == "{" ||
               body.charAt(j) == "}" ||
-              body.charAt(j) == "." ||
-              body.charAt(j) == ":"
+              body.charAt(j) == "." 
             ) {
               nextDel = j;
   
@@ -51,9 +46,7 @@ exports.runQuery = (req, res) => {
                 case "}":
                   city.push(body.slice(currentDel + 1, nextDel));
                   break;
-                case ":":
-                  sem.push(body.slice(currentDel + 1, nextDel));
-  
+                default:
                   break;
               }
               break;
@@ -79,9 +72,7 @@ exports.runQuery = (req, res) => {
       const lname_str = stringForm(lname, "lname");
       const email_str = stringForm(email, "email");
       const city_str = stringForm(city, "city");
-      const sem_str = stringForm(sem, "sem");
-      // console.log(fname_str, lname_str, email_str, city_str, sem_str);
-      let queryholder = [fname_str, lname_str, email_str, city_str, sem_str];
+      let queryholder = [fname_str, lname_str, email_str, city_str];
       let query = queryGen(queryholder);
   
       function queryGen(queryholder) {
@@ -95,17 +86,14 @@ exports.runQuery = (req, res) => {
         });
         return random.slice(0, -4);
       }
-      // console.log(query);
-  
-      // const query = `(${fname_str}) and (${lname_str}) and (${email_str}) and (${city_str}) and (${sem_str});`;
-  
+      
+      
       sql = `select fname as First_Name,lname as Last_Name,email as Email,city as City from  Student_Master_feb26 where ${query};`;
     } else {
       sql =
         "select fname as First_Name,lname as Last_Name,email as Email,city as City from  Student_Master_feb26";
     }
     body = req.body.input;
-    // console.log(sql);
     con.query(sql, function (err, result, fields) {
       if (err) {
         res.render("DelSearchView/table", {
@@ -124,3 +112,4 @@ exports.runQuery = (req, res) => {
       }
     });
   };
+  module.exports={runQuery}

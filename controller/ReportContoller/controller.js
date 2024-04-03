@@ -1,12 +1,11 @@
-const mysql = require('mysql');
 const con = require('../../modules/connection');
-const listFunc = (req, res) => {
+const repListStu = (req, res) => {
     var pageNum=req.query.page;
     var month=req.query.month;
-    if (pageNum==null ) {
+    if (pageNum==null ||pageNum<1) {
         pageNum=1;
     }
-    if (month==null) {
+    if (month==null ||month<1) {
         month=1;
     }
     var pageStart=pageNum-1;
@@ -38,12 +37,8 @@ const listFunc = (req, res) => {
 }
 const stulist=(req,res)=>{
     var pageNum=req.query.page;
-    var month=req.query.month;
-    if (pageNum==null ) {
+    if (pageNum==null ||pageNum<1) {
         pageNum=1;
-    }
-    if (month==null) {
-        month=1;
     }
     var pageStart=pageNum-1;
     var noOfrecords=20;
@@ -85,6 +80,9 @@ group by StuId) as t
 }
 const stuDetailResult=(req,res)=>{
     const stuId=req.query.stuid
+    if (stuId<0) {
+        res.send("Data Not found!")
+    }
     con.query(`
     select *,(TerminalTheoryMarks+PrimilaryTheory+FinalTheory) as TotalTheoryMarks,(TerminalPracticalMarks+PrimilaryPractical+FinalPractical) as TotalPracticalMarks,
     (TerminalTheoryMarks+PrimilaryTheory+FinalTheory+TerminalPracticalMarks+PrimilaryPractical+FinalPractical) as total
@@ -105,6 +103,9 @@ const stuDetailResult=(req,res)=>{
         if (err) {
             console.log(err);
         }
+        if (result.length==0) {
+            res.send("Data Not found!")
+        }
         res.render('ReportViews/resultDetail', { 
             data: result
         });
@@ -112,4 +113,4 @@ const stuDetailResult=(req,res)=>{
     
 }
 
-module.exports = {stulist,listFunc,stuDetailResult}
+module.exports = {stulist,repListStu,stuDetailResult}

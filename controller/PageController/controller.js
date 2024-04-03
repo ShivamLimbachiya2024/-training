@@ -5,7 +5,7 @@ const homeFunc=(req, res)=>{
 }
 const listFunc = (req, res) => {
     var pageNum=req.query.page;
-    if (pageNum==null) {
+    if (pageNum==null || pageNum<1) {
         pageNum=1;
     }
     var pageStart=pageNum-1;

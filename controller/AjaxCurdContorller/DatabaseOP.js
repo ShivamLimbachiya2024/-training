@@ -19,7 +19,7 @@ const fetchCity = (state) => {
         })
     })
 }
-const insertBasic = async (jsonObj) => {
+const insertBasic = (jsonObj) => {
     return new Promise((resolve, reject) => {
         var sql = `INSERT INTO Emp_Master (fname, lname,email,phone,gender,deg,rstatus,dob,address,pref_loc,notice_prd_days,e_ctc,c_ctc,dept,cityid,stateid,zipcode)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?);`
@@ -284,143 +284,164 @@ const fetchALLDAta=()=>{
     })
 }
 const updateBasic=(jsonObj)=>{
-    var sql=`UPDATE Emp_Master
-    SET eid = '${jsonObj.eid}', 
-    fname = '${jsonObj.fname}', 
-    lname = '${jsonObj.lname}', 
-    email = '${jsonObj.email}', 
-    phone = '${jsonObj.phone}', 
-    gender = '${jsonObj.gender}', 
-    deg = '${jsonObj.designation}', 
-    rstatus = '${jsonObj.rstatus}', 
-    dob = '${jsonObj.dob}', 
-    address = '${jsonObj.add1}', 
-    pref_loc = '${jsonObj.pref_loc}', 
-    notice_prd_days = '${jsonObj.not_pir}', 
-    e_ctc = '${jsonObj.e_ctc}', 
-    c_ctc = '${jsonObj.c_ctc}', 
-    dept = '${jsonObj.dept}',
-    cityid = '${jsonObj.city}', 
-    stateid = '${jsonObj.state}', 
-    zipcode = '${jsonObj.zipcode}' 
-    WHERE eid = '${jsonObj.eid}';
-    `
-    con.query(sql,(err,result)=>{
-        if (err) {
-            throw err;
-        }
-    })
+   return new Promise((resolve, reject) => {
+        var sql=`UPDATE Emp_Master
+        SET eid = '${jsonObj.eid}', 
+        fname = '${jsonObj.fname}', 
+        lname = '${jsonObj.lname}', 
+        email = '${jsonObj.email}', 
+        phone = '${jsonObj.phone}', 
+        gender = '${jsonObj.gender}', 
+        deg = '${jsonObj.designation}', 
+        rstatus = '${jsonObj.rstatus}', 
+        dob = '${jsonObj.dob}', 
+        address = '${jsonObj.add1}', 
+        pref_loc = '${jsonObj.pref_loc}', 
+        notice_prd_days = '${jsonObj.not_pir}', 
+        e_ctc = '${jsonObj.e_ctc}', 
+        c_ctc = '${jsonObj.c_ctc}', 
+        dept = '${jsonObj.dept}',
+        cityid = '${jsonObj.city}', 
+        stateid = '${jsonObj.state}', 
+        zipcode = '${jsonObj.zipcode}' 
+        WHERE eid = '${jsonObj.eid}';
+        `
+        con.query(sql,(err,result)=>{
+            if (err) {
+                return reject(err);
+            }
+            return resolve();
+        })
+   })
 }
 const updateEDU=(jsonObj)=>{
-    for (let i = 0; i < jsonObj.eduid.length; i++) {
-        if (jsonObj.eduid[i]!='') {
-            if (jsonObj.isdelEdu[i]!='Deleted') {
-                var sql=`UPDATE education
-                        SET course = '${jsonObj.course[i]}',
-                        pass_year = '${jsonObj.pass_year[i]}',
-                        per = '${jsonObj.perc[i]}'
-                        WHERE eduid = '${jsonObj.eduid[i]}';`
+    return new Promise((resolve, reject) => {
+        for (let i = 0; i < jsonObj.eduid.length; i++) {
+            if (jsonObj.eduid[i]!='') {
+                if (jsonObj.isdelEdu[i]!='Deleted') {
+                    var sql=`UPDATE education
+                            SET course = '${jsonObj.course[i]}',
+                            pass_year = '${jsonObj.pass_year[i]}',
+                            per = '${jsonObj.perc[i]}'
+                            WHERE eduid = '${jsonObj.eduid[i]}';`
+                    con.query(sql,(err,result)=>{
+                        if (err) {
+                            return reject(err)
+                        }
+                    })
+                }else{
+                    var sql=`delete from education WHERE eduid = '${jsonObj.eduid[i]}';`
+                    con.query(sql,(err,result)=>{
+                        if(err){
+                            return reject(err)
+                        }
+                    })
+                }
+            }
+            if (jsonObj.eduid[i]=='' && jsonObj.isdelEdu[i]!='Deleted' && jsonObj.course[i]!='') {
+                var sql=`Insert into education (eid,course,pass_year,per) 
+                        values ('${jsonObj.eid}','${jsonObj.course[i]}','${jsonObj.pass_year[i]}','${jsonObj.perc[i]}')`
                 con.query(sql,(err,result)=>{
                     if (err) {
-                        throw err
-                    }
-                })
-            }else{
-                var sql=`delete from education WHERE eduid = '${jsonObj.eduid[i]}';`
-                con.query(sql,(err,result)=>{
-                    if(err){
-                        throw err
+                        return reject(err);
                     }
                 })
             }
         }
-        if (jsonObj.eduid[i]=='' && jsonObj.isdelEdu[i]!='Deleted' && jsonObj.course[i]!='') {
-            var sql=`Insert into education (eid,course,pass_year,per) 
-                    values ('${jsonObj.eid}','${jsonObj.course[i]}','${jsonObj.pass_year[i]}','${jsonObj.perc[i]}')`
-            con.query(sql,(err,result)=>{
-                if (err) {
-                    throw err;
-                }
-            })
-        }
-    }
+        return resolve()
+    })
 }
 const updateWork=(jsonObj)=>{
-    for (let i = 0; i < jsonObj.comid.length; i++) {
-        if (jsonObj.comid[i]!='') {
-            if (jsonObj.isDelCom[i]!='Deleted') {
-                var sql=`UPDATE New_workexp
-                        SET comp_name = '${jsonObj.com_name[i]}',
-                        designation = '${jsonObj.deg_name[i]}',
-                        from_d = '${jsonObj.exp_from[i]}',
-                        to_d = '${jsonObj.exp_to[i]}'
-                        WHERE workid = '${jsonObj.comid[i]}';`
+    return new Promise((resolve, reject) => {
+        for (let i = 0; i < jsonObj.comid.length; i++) {
+            if (jsonObj.comid[i]!='') {
+                if (jsonObj.isDelCom[i]!='Deleted') {
+                    var sql=`UPDATE New_workexp
+                            SET comp_name = '${jsonObj.com_name[i]}',
+                            designation = '${jsonObj.deg_name[i]}',
+                            from_d = '${jsonObj.exp_from[i]}',
+                            to_d = '${jsonObj.exp_to[i]}'
+                            WHERE workid = '${jsonObj.comid[i]}';`
+                    con.query(sql,(err,result)=>{
+                        if (err) {
+                            return reject(err)
+                        }
+                    })
+                }else{
+                    var sql=`delete from New_workexp WHERE workid = '${jsonObj.comid[i]}';`
+                    con.query(sql,(err,result)=>{
+                        if(err){
+                            return reject(err)
+                        }
+                    })
+                }
+            }
+            if (jsonObj.comid[i]=='' && jsonObj.isDelCom[i]!='Deleted' && jsonObj.com_name[i]!='') {
+                var sql=`Insert into New_workexp (eid,comp_name,designation,from_d,to_d) 
+                        values ('${jsonObj.eid}','${jsonObj.com_name[i]}','${jsonObj.deg_name[i]}','${jsonObj.exp_from[i]}','${jsonObj.exp_to[i]}')`
                 con.query(sql,(err,result)=>{
                     if (err) {
-                        throw err
-                    }
-                })
-            }else{
-                var sql=`delete from New_workexp WHERE workid = '${jsonObj.comid[i]}';`
-                con.query(sql,(err,result)=>{
-                    if(err){
-                        throw err
+                        return reject(err);
                     }
                 })
             }
         }
-        if (jsonObj.comid[i]=='' && jsonObj.isDelCom[i]!='Deleted' && jsonObj.com_name[i]!='') {
-            var sql=`Insert into New_workexp (eid,comp_name,designation,from_d,to_d) 
-                    values ('${jsonObj.eid}','${jsonObj.com_name[i]}','${jsonObj.deg_name[i]}','${jsonObj.exp_from[i]}','${jsonObj.exp_to[i]}')`
-            con.query(sql,(err,result)=>{
-                if (err) {
-                    throw err;
-                }
-            })
-        }
-    }
+    return resolve()
+
+    })
 }
 const updateRef=(jsonObj)=>{
-    for (let i = 0; i < jsonObj.contId.length; i++) {
-        if (jsonObj.contId[i]!='') {
-            if (jsonObj.isDelcont[i]!='Deleted') {
-                var sql=`UPDATE EMP_Refrence
-                        SET relation = '${jsonObj.cont_rel[i]}',
-                        rname = '${jsonObj.cont_name[i]}',
-                        rphone = '${jsonObj.cont_num[i]}'
-                        WHERE redid = '${jsonObj.contId[i]}';`
+    return new Promise((resolve, reject) => {
+        for (let i = 0; i < jsonObj.contId.length; i++) {
+            if (jsonObj.contId[i]!='') {
+                if (jsonObj.isDelcont[i]!='Deleted') {
+                    var sql=`UPDATE EMP_Refrence
+                            SET relation = '${jsonObj.cont_rel[i]}',
+                            rname = '${jsonObj.cont_name[i]}',
+                            rphone = '${jsonObj.cont_num[i]}'
+                            WHERE redid = '${jsonObj.contId[i]}';`
+                    con.query(sql,(err,result)=>{
+                        if (err) {
+                            return reject(err)
+                        }
+                    })
+                }else{
+                    var sql=`delete from EMP_Refrence WHERE redid = '${jsonObj.contId[i]}';`
+                    con.query(sql,(err,result)=>{
+                        if(err){
+                            return reject(err)
+                        }
+                    })
+                }
+            }
+            if (jsonObj.contId[i]=='' && jsonObj.isDelcont[i]!='Deleted' && jsonObj.cont_name[i]!='') {
+                var sql=`Insert into EMP_Refrence (eid,relation,rname,rphone) 
+                        values ('${jsonObj.eid}','${jsonObj.cont_rel[i]}','${jsonObj.cont_name[i]}','${jsonObj.cont_num[i]}')`
                 con.query(sql,(err,result)=>{
                     if (err) {
-                        throw err
-                    }
-                })
-            }else{
-                var sql=`delete from EMP_Refrence WHERE redid = '${jsonObj.contId[i]}';`
-                con.query(sql,(err,result)=>{
-                    if(err){
-                        throw err
+                        return reject(err);
                     }
                 })
             }
         }
-        if (jsonObj.contId[i]=='' && jsonObj.isDelcont[i]!='Deleted' && jsonObj.cont_name[i]!='') {
-            var sql=`Insert into EMP_Refrence (eid,relation,rname,rphone) 
-                    values ('${jsonObj.eid}','${jsonObj.cont_rel[i]}','${jsonObj.cont_name[i]}','${jsonObj.cont_num[i]}')`
-            con.query(sql,(err,result)=>{
-                if (err) {
-                    throw err;
-                }
-            })
-        }
-    }
+        return resolve()
+    })
 }
 const updateLang=async(jsonObj)=>{
-    await deleteLang(jsonObj)
-    await insertlang(jsonObj,jsonObj.eid);
+    try {
+        await deleteLang(jsonObj)
+        await insertlang(jsonObj,jsonObj.eid);
+    } catch (error) {
+        console.log(err);
+    }
 }
 const updateTech=async(jsonObj)=>{
-    await deletetech(jsonObj)
+    try {
+        await deletetech(jsonObj)
     await insertTech(jsonObj,jsonObj.eid)
+    } catch (error) {
+        console.log(error);
+    }
 }
 const deleteLang=(jsonObj)=>{
     return new Promise((resolve, reject) => {

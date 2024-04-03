@@ -1,4 +1,4 @@
-const con = require('../modules/connection');
+const con = require('../../modules/connection');
 const checkUserExist=(email)=>{
     return new Promise((resolve, reject) => {
         var sql=`select count(*) as count from userData where email = '${email}'`;
@@ -28,6 +28,7 @@ const checkUserStatus = async(email)=>{
     } catch (error) {
         console.log(error);
     }
+    
     if (isExistUser==0) {
         return "Not Exist";
     }
@@ -70,6 +71,17 @@ const fetchUserPass=(email)=>{
             return resolve(result[0].Upassword)
         })
     })
-    
 }
-module.exports={checkUserStatus,fetchUserPass,fetchActCode,fetchSalt}
+const fetchCreatedtime=(email)=>{
+    return new Promise((resolve, reject) => {
+        var sql=`Select createdAt from userData where email='${email}'`
+        con.query(sql,(err,result)=>{
+            if (err) {
+                throw err
+            }
+            return resolve(result[0].createdAt)
+        })
+    })
+}
+
+module.exports={checkUserStatus,fetchUserPass,fetchActCode,fetchCreatedtime,fetchSalt}

@@ -41,16 +41,16 @@ const getupdateDataJson = async (req, res) => {
         var langDetails = await fetchLanguage(empId);
         var techDetails = await fetchtech(empId);
         var refDetails = await fetchRefDetails(empId);
+        var oldJsonData = basicDetails;
+        oldJsonData["educationDetails"] = educationDetails;
+        oldJsonData["workDetails"] = workDetails;
+        Object.assign(oldJsonData, langDetails);
+        Object.assign(oldJsonData, techDetails);
+        oldJsonData["refDetails"] = refDetails;
+        res.send(oldJsonData);
     } catch (error) {
         console.log(error);
     }
-    var oldJsonData = basicDetails;
-    oldJsonData["educationDetails"] = educationDetails;
-    oldJsonData["workDetails"] = workDetails;
-    Object.assign(oldJsonData, langDetails);
-    Object.assign(oldJsonData, techDetails);
-    oldJsonData["refDetails"] = refDetails;
-    res.send(oldJsonData);
 };
 const test = async (req, res) => {
     try {
@@ -68,13 +68,17 @@ const cityfetch = async (req, res) => {
         console.log(error);
     }
 };
-const subUpdateData = (req, res) => {
-    updateBasic(req.body);
-    updateEDU(req.body);
-    updateWork(req.body);
-    updateRef(req.body);
-    updateLang(req.body);
-    updateTech(req.body);
+const subUpdateData = async (req, res) => {
+    try {
+        await updateBasic(req.body);
+        await updateEDU(req.body);
+        await updateWork(req.body);
+        await updateRef(req.body);
+        await updateLang(req.body);
+        await updateTech(req.body);
+    } catch (error) {
+        console.log(error);
+    }
     res.send("DATA Updated!");
 };
 const submitData = async (req, res) => {
