@@ -13,6 +13,56 @@ function loadApiData() {
         }
     }
 }
+const workHtmlEle = `
+                        <td>
+
+                            <input type="hidden" name="comid[]">
+                            <label for="com_name1">Company Name </label><input type="text" name="com_name[]"id="com_name1">
+                        </td>
+                        <td>
+
+                            <label for="deg_name1">Designation </label><input type="text" name="deg_name[]"id="deg_name1">
+                        </td>
+                        <td>
+
+                            <label for="exp_from1">From</label><input type="text" name="exp_from[]" id="exp_from1">
+                        </td>
+                        <td>
+                            <label for="exp_to1">To</label> <input type="text" name="exp_to[]" id="exp_to1">
+                            <input type="hidden" name="isDelCom[]">
+                            <p class="delBtn">Delete</p>
+
+                        </td>
+                    `
+const refele =`         <td>
+                            <input type="hidden" name="contId[]">
+                            <label for="cont_name1">Name </label><input type="text" name="cont_name[]" id="cont_name1">
+
+                        </td>
+                        <td>
+                            <label for="cont_num1">Contact number</label> <input type="text" name="cont_num[]"
+                                id="cont_num1">
+
+                        </td>
+                        <td>
+                            <label for="cont_rel1">Relation </label><input type="text" name="cont_rel[]" id="cont_rel1">
+                            <input type="hidden" name="isDelcont[]">
+                            <p class="delBtn">Delete</p>
+                            <br><br>
+
+                        </td>`
+function addWorkexp(eleIdtoappend) {
+    let tr = document.createElement('tr')
+    tr.innerHTML = workHtmlEle.trim();
+    document.getElementById(eleIdtoappend).appendChild(tr)
+    adEventsToDel()
+}
+function addref(eleIdtoappend) {
+    let tr = document.createElement('tr')
+    tr.innerHTML = refele.trim();
+    document.getElementById(eleIdtoappend).appendChild(tr)
+    adEventsToDel()
+}
 if (id != null) {
     document.getElementById('submit').style.display = 'none'
     document.getElementById('submit').disabled = true;
@@ -100,6 +150,7 @@ const fillData = (jsonObjtoBeUpdate) => {
     });
     var i = 0;
     jsonObjtoBeUpdate.workDetails.forEach(element => {
+        addWorkexp('workexp')
         var inpWorkid = document.getElementsByName('comid[]');
         var inpcomNameArr = document.getElementsByName('com_name[]')
         var inpdegNameArr = document.getElementsByName('deg_name[]')
@@ -114,6 +165,7 @@ const fillData = (jsonObjtoBeUpdate) => {
     })
     var i = 0;
     jsonObjtoBeUpdate.refDetails.forEach(element => {
+        addref('ref')
         var contIdArr = document.getElementsByName('contId[]')
         var cont_nameArr = document.getElementsByName('cont_name[]')
         var cont_numArr = document.getElementsByName('cont_num[]')
@@ -271,16 +323,19 @@ function slideRight() {
     }
     fieldsets[current].style.display = "block";
 }
-
-var DelBtnArr = document.getElementsByClassName('delBtn');
-for (let i = 0; i < DelBtnArr.length; i++) {
-    DelBtnArr[i].addEventListener('click', (event) => {
-        var delbtn = event.target;
-        delbtn.previousElementSibling.value = "Deleted";
-        delbtn.parentElement.parentElement.style.display = 'none';
-        delbtn.parentElement.parentElement.getElementsByTagName('input')[1].value=''
-    })
+const adEventsToDel = () => {
+    var DelBtnArr = document.getElementsByClassName('delBtn');
+    for (let i = 0; i < DelBtnArr.length; i++) {
+        DelBtnArr[i].addEventListener('click', (event) => {
+            var delbtn = event.target;
+            delbtn.style.cursor = "pointer";
+            delbtn.previousElementSibling.value = "Deleted";
+            delbtn.parentElement.parentElement.style.display = 'none';
+            delbtn.parentElement.parentElement.getElementsByTagName('input')[1].value = ''
+        })
+    }
 }
+adEventsToDel()
 if (id != null) {
     updateBtn.addEventListener('click', function () {
         const formData = new FormData(document.getElementById('myFrom'));
@@ -417,6 +472,7 @@ const validateForm = () => {
     }
     if (document.getElementById("M").checked == true || document.getElementById("F").checked == true) {
         // isValid = true;
+        document.getElementById('gandermsg').innerHTML = '';
     } else {
         document.getElementById('gandermsg').innerHTML = 'Plz fill!';
         isValid = false;

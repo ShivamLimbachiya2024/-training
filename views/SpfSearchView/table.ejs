@@ -80,7 +80,7 @@
       <div class="btn " style="pointer-events: none; cursor: default;" ><a href="/studentlist?pageid=<%=250%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button  class="btn btn-primary">>></button> </a></div>
   <%} else { %>
           <div class="btn " ><a href="/studentlist?pageid=<%=Number(pageid)+1%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button  class="btn btn-primary">></button> </a></div>
-          <div class="btn " ><a href="/studentlist?pageid=<%=250%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button  class="btn btn-primary">>></button> </a></div>
+          <div class="btn " ><a href="/studentlist?pageid=<%=totalPage%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button  class="btn btn-primary">>></button> </a></div>
   <%}%>
 </div>
             <table class="table table-striped">

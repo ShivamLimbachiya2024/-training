@@ -246,7 +246,8 @@
             </fieldset>
             <fieldset>
                 <legend><b>Work Experience</b></legend>
-                <table>
+                <button type="button" onclick="addWorkexp('workexp')">+</button>
+                <table id="workexp">
                     <tr>
                         <td>
 
@@ -267,50 +268,6 @@
                             <p class="delBtn">Delete</p>
 
                         </td>
-                    </tr>
-                    <tr>
-                        <td>
-
-                            <input type="hidden" name="comid[]">
-                            <label for="com_name3">Company Name </label><input type="text" name="com_name[]"id="com_name3">
-                        </td>
-                        <td>
-
-                            <label for="deg_name3">Designation </label><input type="text" name="deg_name[]"id="deg_name3">
-                        </td>
-                        <td>
-
-                            <label for="exp_from3">From</label><input type="text" name="exp_from[]" id="exp_from3">
-                        </td>
-                        <td>
-                            <label for="exp_to3">To</label> <input type="text" name="exp_to[]" id="exp_to3">
-                            <input type="hidden" name="isDelCom[]">
-                            <p class="delBtn">Delete</p>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="hidden" name="comid[]">
-                            <label for="com_name2">Company Name </label><input type="text" name="com_name[]"id="com_name2">
-
-                        </td>
-                        <td>
-                            <label for="deg_name2">Designation </label><input type="text" name="deg_name[]"id="deg_name2">
-
-
-                        </td>
-                        <td>
-                            <label for="exp_from2">From</label><input type="text" name="exp_from[]" id="exp_from2">
-                        </td>
-                        <td>
-                            <label for="exp_to2">To</label> <input type="text" name="exp_to[]" id="exp_to2">
-                            <input type="hidden" name="isDelCom[]">
-                            <p class="delBtn">Delete</p>
-
-
-                        </td>
-                    </tr>
                 </table>
             </fieldset>
             <fieldset>
@@ -453,7 +410,8 @@
             </fieldset>
             <fieldset>
                 <legend><b>Refrence Contact</b></legend>
-                <table>
+                <button type="button" onclick="addref('ref')">+</button>
+                <table id="ref">
                     <tr>
                         <td>
                             <input type="hidden" name="contId[]">
@@ -471,24 +429,6 @@
                             <p class="delBtn">Delete</p>
                             <br><br>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="hidden" name="contId[]">
-                            <label for="cont_name2">Name </label><input type="text" name="cont_name[]" id="cont_name2">
-
-                        </td>
-                        <td>
-                            <label for="cont_num2">Contact number</label><input type="text" name="cont_num[]"
-                                id="cont_num2">
-
-                        </td>
-                        <td>
-                            <label for="cont_rel2">Relation </label><input type="text" name="cont_rel[]" id="cont_rel2">
-                            <input type="hidden" name="isDelcont[]">
-                            <p class="delBtn">Delete</p>
-                            <br><br>
                         </td>
                     </tr>
                 </table>

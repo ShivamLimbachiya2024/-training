@@ -10,9 +10,11 @@
             border: 1px solid white;
             border-radius: 10px;
         }
-        h1{
+
+        h1 {
             color: white;
         }
+
         #main {
             width: 500px;
             height: 500px;
@@ -44,7 +46,8 @@
             font-size: 50px;
 
         }
-        body{
+
+        body {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -61,9 +64,9 @@
         <span>Score:</span>
         <span id="score"></span>
     </span>
-    <button class="btn" onclick="StartTime()">Start</button>
+    <button class="btn" id='strtbtnid' onclick="StartTime()">Start</button>
     <span id="timetext">Timmer :<span class="timmer"></span></span>
-    
+
     <div id="Res"></div>
     <table id="main">
         <tr>
@@ -88,6 +91,7 @@
 
         var timer = document.querySelector(".timmer");
         function StartTime() {
+            document.getElementById("strtbtnid").disabled = true
             second = 60;
             gameStart();
             intvl = setInterval(timmer, 1000);
@@ -98,6 +102,7 @@
             second = second - 1;
             timer.innerHTML = second;
             if (second == 0) {
+                document.getElementById("strtbtnid").disabled = true
                 var table = document.getElementById("main");
                 table.style.display = 'none';
                 clearInterval(intvl);
@@ -169,7 +174,7 @@
             removePreviousEvents();
             addRandomcolor();
 
-            
+
             const tds = document.querySelectorAll("td");
             for (let i = 0; i < tds.length; i++) {
                 tds[i].removeEventListener("click", minusscore);
