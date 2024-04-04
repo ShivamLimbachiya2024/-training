@@ -1,7 +1,7 @@
 const con = require('../modules/connection')
 const runQuery = (req, res) => {
-  let body = req.body.input + ".";
-  body = body.split(" ").join("");
+  let body = req.body.input + "/";
+  // body = body.split(" ").join("");
   let fname = [];
   let lname = [];
   let email = [];
@@ -17,7 +17,7 @@ const runQuery = (req, res) => {
         body.charAt(i) == "$" ||
         body.charAt(i) == "{" ||
         body.charAt(i) == "}" ||
-        body.charAt(i) == "."
+        body.charAt(i) == "/"
       ) {
         currentDel = i;
 
@@ -27,7 +27,7 @@ const runQuery = (req, res) => {
             body.charAt(j) == "$" ||
             body.charAt(j) == "{" ||
             body.charAt(j) == "}" ||
-            body.charAt(j) == "."
+            body.charAt(j) == "/"
           ) {
             nextDel = j;
 

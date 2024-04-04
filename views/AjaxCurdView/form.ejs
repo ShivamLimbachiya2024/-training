@@ -22,7 +22,8 @@
         #list {
             text-align: center;
         }
-        .delBtn{
+
+        .delBtn {
             border: 1px solid;
         }
     </style>
@@ -78,13 +79,13 @@
                         <td>
                             <input type="text" maxlength="120" name="email" id="email">
                         </td>
-                        <td>
+                        <!-- <td>
                             <label for="add2">Address2:</label>
 
                         </td>
                         <td>
                             <textarea name="add2" id="add2" cols="30" rows="1"></textarea>
-                        </td>
+                        </td> -->
                     </tr>
                     <tr>
                         <td>
@@ -95,14 +96,14 @@
                             <input type="text" name="phone" id="phone">
                         </td>
                         <td>
-                            <label for="city">City </label>
-
+                            <label for="stateselect">State</label>
                         </td>
                         <td>
-                            <label for="cityselect">City</label>
-                            <select name="city" id="cityselect">
+                            <select name="state" id="stateselect" onchange="fetchCity()">
+                                <option value="">Select</option>
                             </select>
                         </td>
+
                     </tr>
                     <tr>
                         <td>
@@ -115,11 +116,12 @@
                             <span id="gandermsg"></span>
                         </td>
                         <td>
-                            <label for="stateselect">State</label>
+                            <label for="city">City </label>
+
                         </td>
                         <td>
-                            <select name="state" id="stateselect" onchange="fetchCity()">
-                                <option value="">Select</option>
+                            <label for="cityselect">City</label>
+                            <select name="city" id="cityselect">
                             </select>
                         </td>
                     </tr>
@@ -252,11 +254,13 @@
                         <td>
 
                             <input type="hidden" name="comid[]">
-                            <label for="com_name1">Company Name </label><input type="text" name="com_name[]"id="com_name1">
+                            <label for="com_name1">Company Name </label><input type="text" name="com_name[]"
+                                id="com_name1">
                         </td>
                         <td>
 
-                            <label for="deg_name1">Designation </label><input type="text" name="deg_name[]"id="deg_name1">
+                            <label for="deg_name1">Designation </label><input type="text" name="deg_name[]"
+                                id="deg_name1">
                         </td>
                         <td>
 
@@ -334,7 +338,7 @@
             </fieldset>
             <fieldset>
                 <legend><b>Technologies You know</b></legend>
-                
+
                 <div><span id="tech_msg"></span></div>
                 <table>
                     <tr>
@@ -375,7 +379,8 @@
                     <tr>
                         <td>
 
-                            <label><input type="checkbox" name="tech_known[]" value="laravel"id="laravel">Laravel</label>
+                            <label><input type="checkbox" name="tech_known[]" value="laravel"
+                                    id="laravel">Laravel</label>
                         </td>
                         <td>
                             <label><input type="radio" name="laravel_ability" value="Beginer">Beginer</label>
@@ -447,7 +452,8 @@
                         </select>
                     </td>
                     <td>
-                        <label for="not_pir">Notice Period</label> <input type="text" name="not_pir" id="not_pir" required>
+                        <label for="not_pir">Notice Period</label> <input type="text" name="not_pir" id="not_pir"
+                            required>
                     </td>
                     <td>
                         <label for="dept">Department</label>
