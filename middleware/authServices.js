@@ -1,4 +1,4 @@
-const {checkUserStatus}=require('../controller/RegistrationLogin/checkQueries');
+const {checkUserStatus}=require('../service/RegisterCheckQueries');
 const jwt = require("jsonwebtoken");
 const authServices=async(req,res,next)=>{
     var token = req.cookies.token

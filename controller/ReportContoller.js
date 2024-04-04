@@ -1,23 +1,23 @@
-const con = require('../../modules/connection');
+const con = require('../modules/connection');
 const repListStu = (req, res) => {
-    var pageNum=req.query.page;
-    var month=req.query.month;
-    if (pageNum==null ||pageNum<1) {
-        pageNum=1;
+    var pageNum = req.query.page;
+    var month = req.query.month;
+    if (pageNum == null || pageNum < 1) {
+        pageNum = 1;
     }
-    if (month==null ||month<1) {
-        month=1;
+    if (month == null || month < 1 || month > 3) {
+        month = 1;
     }
-    var pageStart=pageNum-1;
-    var noOfrecords=20;
-    var start=pageStart*noOfrecords;
+    var pageStart = pageNum - 1;
+    var noOfrecords = 20;
+    var start = pageStart * noOfrecords;
     var lastPage;
-    con.query("select count(distinct(sid)) as count from attendence",(err,result)=>{
-            if (!err) {
-                lastPage=Math.ceil(result[0].count/noOfrecords);
-            }  
+    con.query("select count(distinct(sid)) as count from attendence", (err, result) => {
+        if (!err) {
+            lastPage = Math.ceil(result[0].count / noOfrecords);
+        }
     })
-    
+
     con.query(`
     SELECT a.sid,s.fname,count(a.sid) as No_days_Present,ROUND(count(a.sid)/0.31,2) as Percentage from attendence as a 
     LEFT JOIN Student_Master_feb26 as s 
@@ -27,29 +27,29 @@ const repListStu = (req, res) => {
         if (err) {
             console.log(err);
         }
-        res.render('ReportViews/simple', { 
+        res.render('ReportViews/simple', {
             data: result,
-            pageNum:pageNum,
-            lastPage:lastPage,
-            month:month
+            pageNum: pageNum,
+            lastPage: lastPage,
+            month: month
         });
     })
 }
-const stulist=(req,res)=>{
-    var pageNum=req.query.page;
-    if (pageNum==null ||pageNum<1) {
-        pageNum=1;
+const stulist = (req, res) => {
+    var pageNum = req.query.page;
+    if (pageNum == null || pageNum < 1) {
+        pageNum = 1;
     }
-    var pageStart=pageNum-1;
-    var noOfrecords=20;
-    var start=pageStart*noOfrecords;
+    var pageStart = pageNum - 1;
+    var noOfrecords = 20;
+    var start = pageStart * noOfrecords;
     var lastPage;
-    con.query("select count(sid) as count from Student_Master_feb26",(err,result)=>{
-            if (!err) {
-                lastPage=Math.ceil(result[0].count/noOfrecords);
-            }  
+    con.query("select count(sid) as count from Student_Master_feb26", (err, result) => {
+        if (!err) {
+            lastPage = Math.ceil(result[0].count / noOfrecords);
+        }
     })
-    
+
     con.query(`
     select *,(TerminalTheoryMarks+PrimilaryTheory+FinalTheory) as TotalTheoryMarks,
 (TerminalTheoryMarks+PrimilaryTheory+FinalTheory+TerminalPracticalMarks+PrimilaryPractical+FinalPractical) as total
@@ -70,17 +70,17 @@ group by StuId) as t
         if (err) {
             console.log(err);
         }
-        res.render('ReportViews/stulist', { 
+        res.render('ReportViews/stulist', {
             data: result,
-            pageNum:pageNum,
-            lastPage:lastPage
+            pageNum: pageNum,
+            lastPage: lastPage
         });
     })
-    
+
 }
-const stuDetailResult=(req,res)=>{
-    const stuId=req.query.stuid
-    if (stuId<0) {
+const stuDetailResult = (req, res) => {
+    const stuId = req.query.stuid
+    if (stuId < 0) {
         res.send("Data Not found!")
     }
     con.query(`
@@ -103,14 +103,14 @@ const stuDetailResult=(req,res)=>{
         if (err) {
             console.log(err);
         }
-        if (result.length==0) {
+        if (result.length == 0) {
             res.send("Data Not found!")
         }
-        res.render('ReportViews/resultDetail', { 
+        res.render('ReportViews/resultDetail', {
             data: result
         });
     })
-    
+
 }
 
-module.exports = {stulist,repListStu,stuDetailResult}
+module.exports = { stulist, repListStu, stuDetailResult }

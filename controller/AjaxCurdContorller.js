@@ -20,7 +20,7 @@ const {
     fetchRefDetails,
     fetchtech,
     fetchLanguage,
-} = require("./DatabaseOP");
+} = require("../service/AjaxDatabaseOP");
 const listEmp = async (req, res) => {
     var data = await fetchALLDAta();
     res.render("AjaxCurdView/ListEMP", { data: data });

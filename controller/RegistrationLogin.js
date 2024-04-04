@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const {verifyAndInsertUser,encryptAndInsertPass,updateTimeStamp} = require("./DBOperations");
-const { fetchActCode, fetchUserPass, fetchSalt,fetchCreatedtime ,checkUserStatus} = require("./checkQueries");
+const { verifyAndInsertUser, encryptAndInsertPass, updateTimeStamp } = require("../service/RegisterDBOperations");
+const { fetchActCode, fetchUserPass, fetchSalt, fetchCreatedtime, checkUserStatus } = require("../service/RegisterCheckQueries");
 const md5 = require("md5");
 
 const renderRegister = (req, res) => {
@@ -49,7 +49,7 @@ const updateLink = (req, res) => {
 const genForgotPass = async (req, res) => {
     let activationLink;
     var failObj = { status: 400, actCode: "", email: req.body.username };
-    var succesObj = {status: 200, actCode: "",email: req.body.username};
+    var succesObj = { status: 200, actCode: "", email: req.body.username };
     try {
         const isUserExist = await checkUserStatus(req.body.username);
         if (isUserExist == 'active') {

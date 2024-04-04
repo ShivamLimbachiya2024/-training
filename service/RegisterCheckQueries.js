@@ -1,8 +1,8 @@
-const con = require('../../modules/connection');
-const checkUserExist=(email)=>{
+const con = require('../modules/connection');
+const checkUserExist = (email) => {
     return new Promise((resolve, reject) => {
-        var sql=`select count(*) as count from userData where email = '${email}'`;
-        con.query(sql,(err,result)=>{
+        var sql = `select count(*) as count from userData where email = '${email}'`;
+        con.query(sql, (err, result) => {
             if (err) {
                 throw err
             }
@@ -10,10 +10,10 @@ const checkUserExist=(email)=>{
         })
     })
 }
-const checkActiveStatus=(email)=>{
+const checkActiveStatus = (email) => {
     return new Promise((resolve, reject) => {
-        var sql=`select count(*) as count from userData where email = '${email}' and active_Status=1`;
-        con.query(sql,(err,result)=>{
+        var sql = `select count(*) as count from userData where email = '${email}' and active_Status=1`;
+        con.query(sql, (err, result) => {
             if (err) {
                 throw err
             }
@@ -21,61 +21,61 @@ const checkActiveStatus=(email)=>{
         })
     })
 }
-const checkUserStatus = async(email)=>{
+const checkUserStatus = async (email) => {
     try {
-        var isExistUser=await checkUserExist(email)
-        var isUserActive=await checkActiveStatus(email)
+        var isExistUser = await checkUserExist(email)
+        var isUserActive = await checkActiveStatus(email)
     } catch (error) {
         console.log(error);
     }
-    
-    if (isExistUser==0) {
+
+    if (isExistUser == 0) {
         return "Not Exist";
     }
-    if (isUserActive==1) {
+    if (isUserActive == 1) {
         return "active"
     }
-    if (isExistUser==1 && isUserActive==0) {
+    if (isExistUser == 1 && isUserActive == 0) {
         return "notActive"
     }
 }
-const fetchSalt=(email)=>{
+const fetchSalt = (email) => {
     var sql = `Select salt from userData where email='${email}'`
     return new Promise((resolve, reject) => {
-        con.query(sql,(err,result)=>{
-            if(err){
+        con.query(sql, (err, result) => {
+            if (err) {
                 throw err
             }
             return resolve(result[0].salt)
         })
     })
 }
-const fetchActCode=(email)=>{
+const fetchActCode = (email) => {
     var sql = `Select activation_link from userData where email='${email}'`
     return new Promise((resolve, reject) => {
-        con.query(sql,(err,result)=>{
-            if(err){
+        con.query(sql, (err, result) => {
+            if (err) {
                 throw err
             }
             return resolve(result[0].activation_link)
         })
     })
 }
-const fetchUserPass=(email)=>{
+const fetchUserPass = (email) => {
     var sql = `Select Upassword from userData where email='${email}'`
     return new Promise((resolve, reject) => {
-        con.query(sql,(err,result)=>{
-            if(err){
+        con.query(sql, (err, result) => {
+            if (err) {
                 throw err
             }
             return resolve(result[0].Upassword)
         })
     })
 }
-const fetchCreatedtime=(email)=>{
+const fetchCreatedtime = (email) => {
     return new Promise((resolve, reject) => {
-        var sql=`Select createdAt from userData where email='${email}'`
-        con.query(sql,(err,result)=>{
+        var sql = `Select createdAt from userData where email='${email}'`
+        con.query(sql, (err, result) => {
             if (err) {
                 throw err
             }
@@ -84,4 +84,4 @@ const fetchCreatedtime=(email)=>{
     })
 }
 
-module.exports={checkUserStatus,fetchUserPass,fetchActCode,fetchCreatedtime,fetchSalt}
+module.exports = { checkUserStatus, fetchUserPass, fetchActCode, fetchCreatedtime, fetchSalt }
