@@ -83,32 +83,27 @@
           <div class="btn " ><a href="/studentlist?pageid=<%=totalPage%>&fname=<%=fname%>&lname=<%=lname%>&city=<%=city%>"> <button  class="btn btn-primary">>></button> </a></div>
   <%}%>
 </div>
+<%var keyObj=Object.keys(data[0]);%>
             <table class="table table-striped">
-                <thead>
                     <tr>
-                        <%for (let value in col) { %>
-                            <td class="bg-primary">
-                                <div class="d-flex justify-content-between ">
-                                    
-                                        <%= col[value].name %>
-                                            <% colname=col[value].name %>
-                                   
-                                </div>
-                            </td>
-                            <%} %>
+                        <%for(let i=0;i<keyObj.length;i++){%>
+                            <th>
+                                <%=keyObj[i]%>
+                            </th>
+                            <%}%>
+                                <th>Details</th>
                     </tr>
-                </thead>
-                <tbody>
-                    <%for(let i=0; i < row.length;i++) {%>
+                    <%for(let i=0;i<data.length;i++){%>
                         <tr>
-                            <% for(let j=0; j < col.length; j++) {%>
+                            <%for(let j=0;j<keyObj.length;j++){%>
                                 <td>
-                                    <%= row[i][col[j].name] %>
+                                    <%=data[i][keyObj[j]]%>
                                 </td>
+                
                                 <%}%>
+                                    <td><a href="/Detail?stuid=<%=data[i][keyObj[0]]%>">More Details...</a></td>
                         </tr>
                         <%}%>
-                </tbody>
             </table>
     <script>
         function seemore(){
