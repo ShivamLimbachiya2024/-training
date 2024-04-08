@@ -27,32 +27,36 @@ const studentlist = async (req, res) => {
         selectForPage = `select count(*) as count from Student_Master_feb26 where sid like '${studentid}' or fname like '${fname}' or email like '${email}' or lname like '${lname}' or phone like '${phoneno}' or city like '${city}' `;
     }
     console.log(selectForPage);
-    let resultCount = await runQuery(selectForPage);
-    totalPage = Math.ceil(resultCount[0].count / recordsinonepage)
-    if (pagenumber <= 0 || pagenumber == null || pagenumber > totalPage) {
-        pagenumber = 1;
-    }
+    try {
+        let resultCount = await runQuery(selectForPage);
+        totalPage = Math.ceil(resultCount[0].count / recordsinonepage)
+        if (pagenumber <= 0 || pagenumber == null || pagenumber > totalPage) {
+            pagenumber = 1;
+        }
 
-    var start = (pagenumber - 1) * recordsinonepage;
+        var start = (pagenumber - 1) * recordsinonepage;
 
-    var select = `select sid As StudentID,fname As FirstName ,lname As LastName, email As Email,phone As MobileNumber,age as Age, gender As Gender, city As City,zipcode As PinCode from Student_Master_feb26 limit ${start},${recordsinonepage} `;
-    if (studentid || fname || lname || email || phoneno || city) {
-        select = `select sid As StudentID, fname As FirstName, lname As LastName, email As Email, phone As MobileNumber,age as Age, gender As Gender, city As City, zipcode As PinCode from Student_Master_feb26 where sid like '${studentid}' or fname like '${fname}' or email like '${email}' or lname like '${lname}' or phone like '${phoneno}' 
+        var select = `select sid As StudentID,fname As FirstName ,lname As LastName, email As Email,phone As MobileNumber,age as Age, gender As Gender, city As City,zipcode As PinCode from Student_Master_feb26 limit ${start},${recordsinonepage} `;
+        if (studentid || fname || lname || email || phoneno || city) {
+            select = `select sid As StudentID, fname As FirstName, lname As LastName, email As Email, phone As MobileNumber,age as Age, gender As Gender, city As City, zipcode As PinCode from Student_Master_feb26 where sid like '${studentid}' or fname like '${fname}' or email like '${email}' or lname like '${lname}' or phone like '${phoneno}' 
                 or city like '${city}' limit ${start},${recordsinonepage + start} `;
-    }
+        }
 
-    const result = await runQuery(select)
-    if (result.length == 0) {
-        res.send("Data not found")
-    } else {
-        res.render("SpfSearchView/table", {
-            data: result,
-            pageid: pagenumber,
-            fname: fname,
-            city: city,
-            lname: lname,
-            totalPage: totalPage
-        });
+        const result = await runQuery(select)
+        if (result.length == 0) {
+            res.send("Data not found")
+        } else {
+            res.render("SpfSearchView/table", {
+                data: result,
+                pageid: pagenumber,
+                fname: fname,
+                city: city,
+                lname: lname,
+                totalPage: totalPage
+            });
+        }
+    } catch (error) {
+        console.log(error);
     }
 };
 module.exports = { studentlist };
