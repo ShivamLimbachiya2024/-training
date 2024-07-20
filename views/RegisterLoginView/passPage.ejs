@@ -32,11 +32,12 @@
         .registerBtn {
             text-align: center;
         }
+
         .registerBtn {
             text-align: center;
         }
 
-       
+
 
         #formField {
             border: none;
@@ -44,7 +45,7 @@
             backdrop-filter: blur(208px);
             background: hsla(0, 0%, 100%, 0.31);
             box-shadow: 0 0 5px #00000023;
-            
+
         }
 
         body {
@@ -80,7 +81,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const email = urlParams.get('email');
             var ReqOBJ = {}
-            if (createPass == confPass) {
+            if ((createPass == confPass) && (createPass && confPass)) {
                 ReqOBJ['password'] = createPass;
                 ReqOBJ['email'] = email;
                 const response = await fetch('/CreatePassword', {
