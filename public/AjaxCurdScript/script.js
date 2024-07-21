@@ -34,7 +34,7 @@ const workHtmlEle = `
 
                         </td>
                     `
-const refele =`         <td>
+const refele = `         <td>
                             <input type="hidden" name="contId[]">
                             <label for="cont_name1">Name </label><input type="text" name="cont_name[]" id="cont_name1">
 
@@ -79,6 +79,7 @@ if (id != null) {
         if (this.readyState == 4 && this.status == 200) {
             var jsonObjtoBeUpdate = JSON.parse(this.responseText);
             fillData(jsonObjtoBeUpdate)
+            fetchCityForUpdate(jsonObjtoBeUpdate.stateid)
         }
     }
 }
@@ -89,6 +90,19 @@ function fetchCity() {
 
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", `/cityfetch?state=${selectedState}`, true);
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var citieArr = JSON.parse(this.responseText);
+            var selectComponet = document.getElementById('cityselect');
+            selectComponet.innerHTML = '';
+            appendData(citieArr, selectComponet)
+        }
+    }
+}
+function fetchCityForUpdate(stateId) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", `/cityfetch?state=${stateId}`, true);
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -116,10 +130,10 @@ const fillData = (jsonObjtoBeUpdate) => {
     document.getElementById('add1').value = jsonObjtoBeUpdate.address
     document.getElementById('email').value = jsonObjtoBeUpdate.email
     document.getElementById('phone').value = jsonObjtoBeUpdate.phone
-    // document.getElementById('cityselect').value=jsonObjtoBeUpdate
+    // document.getElementById('cityselect').value = jsonObjtoBeUpdate.cityid
     // document.getElementById('M').value=jsonObjtoBeUpdate
     // document.getElementById('F').value=jsonObjtoBeUpdate
-    // document.getElementById('stateselect').value=jsonObjtoBeUpdate
+    // document.getElementById('stateselect').value = jsonObjtoBeUpdate.stateid
     document.getElementById('rstatus').value = jsonObjtoBeUpdate.rstatus
     document.getElementById('zipcode').value = jsonObjtoBeUpdate.zipcode
     document.getElementById('dob').value = jsonObjtoBeUpdate.dob
