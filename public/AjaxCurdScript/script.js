@@ -1,16 +1,39 @@
 var updateBtn;
 const urlParams = new URLSearchParams(window.location.search);
+loadApiData();
 const id = urlParams.get('id');
-function loadApiData() {
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "/test", true);
-    xhttp.send();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var statesArr = JSON.parse(this.responseText);
-            var selectComponet = document.getElementById('stateselect');
-            appendData(statesArr, selectComponet)
-        }
+async function loadApiData() {
+    const response = await fetch("/test");
+    const statesArr = await response.json();
+    var selectComponet = document.getElementById('stateselect');
+    appendData(statesArr, selectComponet)
+    if (id != null) {
+        document.getElementById('submit').style.display = 'none'
+        document.getElementById('submit').disabled = true;
+        updateBtn = document.createElement('span')
+        updateBtn.style.border = '1px solid black'
+        updateBtn.style.cursor = "pointer";
+        updateBtn.innerHTML = 'UPDATE'
+        document.getElementById('lastField').appendChild(updateBtn)
+
+        const response = await fetch(`/getData?id=${id}`);
+        const jsonObjtoBeUpdate = await response.json();
+        await fetchCityForUpdate(jsonObjtoBeUpdate.stateid)
+        fillData(jsonObjtoBeUpdate)
+
+        updateBtn.addEventListener('click', function () {
+            const formData = new FormData(document.getElementById('myFrom'));
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/submitUpdate')
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById('list').innerHTML = '<a href="/tasks/JobAppWithAjax"><button>ALL EMP</button></a>'
+                    console.log(this.responseText);
+                }
+            }
+            xhr.send(new URLSearchParams(formData).toString())
+        })
     }
 }
 const workHtmlEle = `
@@ -63,26 +86,6 @@ function addref(eleIdtoappend) {
     document.getElementById(eleIdtoappend).appendChild(tr)
     adEventsToDel()
 }
-if (id != null) {
-    document.getElementById('submit').style.display = 'none'
-    document.getElementById('submit').disabled = true;
-    updateBtn = document.createElement('span')
-    updateBtn.style.border = '1px solid black'
-    updateBtn.style.cursor = "pointer";
-    updateBtn.innerHTML = 'UPDATE'
-    document.getElementById('lastField').appendChild(updateBtn)
-
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", `/getData?id=${id}`, true);
-    xhttp.send();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var jsonObjtoBeUpdate = JSON.parse(this.responseText);
-            fillData(jsonObjtoBeUpdate)
-            fetchCityForUpdate(jsonObjtoBeUpdate.stateid)
-        }
-    }
-}
 
 function fetchCity() {
     var selectComponet = document.getElementById('stateselect');
@@ -100,18 +103,12 @@ function fetchCity() {
         }
     }
 }
-function fetchCityForUpdate(stateId) {
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", `/cityfetch?state=${stateId}`, true);
-    xhttp.send();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var citieArr = JSON.parse(this.responseText);
-            var selectComponet = document.getElementById('cityselect');
-            selectComponet.innerHTML = '';
-            appendData(citieArr, selectComponet)
-        }
-    }
+async function fetchCityForUpdate(stateId) {
+    const response = await fetch(`/cityfetch?state=${stateId}`);
+    const citieArr = await response.json();
+    var selectComponet = document.getElementById('cityselect');
+    selectComponet.innerHTML = '';
+    appendData(citieArr, selectComponet)
 }
 function appendData(statesArr, selectComponet) {
     selectComponet.innerHTML = "<option value=''>Select</option>"
@@ -130,7 +127,7 @@ const fillData = (jsonObjtoBeUpdate) => {
     document.getElementById('add1').value = jsonObjtoBeUpdate.address
     document.getElementById('email').value = jsonObjtoBeUpdate.email
     document.getElementById('phone').value = jsonObjtoBeUpdate.phone
-    // document.getElementById('cityselect').value = jsonObjtoBeUpdate.cityid
+    document.getElementById('cityselect').value = jsonObjtoBeUpdate.cityid
     // document.getElementById('M').value=jsonObjtoBeUpdate
     // document.getElementById('F').value=jsonObjtoBeUpdate
     // document.getElementById('stateselect').value = jsonObjtoBeUpdate.stateid
@@ -350,21 +347,7 @@ const adEventsToDel = () => {
     }
 }
 adEventsToDel()
-if (id != null) {
-    updateBtn.addEventListener('click', function () {
-        const formData = new FormData(document.getElementById('myFrom'));
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/submitUpdate')
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById('list').innerHTML = '<a href="/tasks/JobAppWithAjax"><button>ALL EMP</button></a>'
-                console.log(this.responseText);
-            }
-        }
-        xhr.send(new URLSearchParams(formData).toString())
-    })
-}
+
 const validateForm = () => {
     var isValid = true;
     var regName = /^[a-zA-Z]+$/;
